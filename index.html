@@ -40,7 +40,6 @@
 
   <style>
     :root {
-      /* Light Barbie & Baby Pink / Violet Palette */
       --bg: #fdf2f8;
       --card-bg: rgba(255, 255, 255, 0.85);
       --card-sub: #fce7f3;
@@ -67,7 +66,6 @@
     }
 
     [data-theme="dark"] {
-      /* Dark Mood / Midnight Plum & Glowing Violet */
       --bg: #120a21;
       --card-bg: rgba(30, 16, 53, 0.85);
       --card-sub: #25123e;
@@ -113,7 +111,6 @@
       padding: 12px 0 16px 0;
     }
 
-    /* Redesigned Clean Main Title */
     .app-title {
       font-size: 1.6rem;
       font-weight: 800;
@@ -144,7 +141,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* Stats Dashboard Grid */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -165,7 +161,6 @@
     .stat-val { font-size: 1.15rem; font-weight: 800; }
     .stat-lbl { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
 
-    /* Cards */
     .card {
       background: var(--grad-card);
       border: 1px solid var(--border);
@@ -198,7 +193,6 @@
       margin: 12px 0;
     }
 
-    /* Radial Progress Ring */
     .progress-ring-container {
       position: relative;
       width: 90px;
@@ -227,7 +221,6 @@
     .ring-num { font-size: 1.5rem; font-weight: 800; line-height: 1; }
     .ring-sub { font-size: 0.62rem; color: var(--text-muted); font-weight: 600; }
 
-    /* Folder List View */
     .folder-item {
       background: var(--grad-card);
       border: 1px solid var(--border);
@@ -272,7 +265,6 @@
       transition: width 0.3s ease;
     }
 
-    /* Sub-Steps */
     .step-card {
       background: var(--card-sub);
       border: 1px solid var(--border);
@@ -317,7 +309,6 @@
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
     .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
 
-    /* Inputs & Chips */
     input, select, textarea {
       width: 100%;
       padding: 10px 12px;
@@ -467,7 +458,7 @@
     <header>
       <button class="btn-outline btn-sm" onclick="switchView('home')">← Back</button>
       <h2 id="folder-detail-name" style="font-size: 1rem; text-align: center;">Protocol</h2>
-      <button class="btn-danger-outline btn-sm" onclick="deleteCurrentFolder()">🗑️ Delete</button>
+      <button class="btn-danger-outline btn-sm" onclick="deleteCurrentFolder()">🗑️ Delete Protocol</button>
     </header>
 
     <div class="card">
@@ -620,7 +611,7 @@
       }
     };
 
-    let folders = JSON.parse(localStorage.getItem('attempts_v5_data')) || [
+    let folders = JSON.parse(localStorage.getItem('attempts_v7_data')) || [
       {
         id: 1,
         name: "pET-28a Cloning",
@@ -664,7 +655,7 @@
     let currentStepId = null;
 
     function saveData() {
-      localStorage.setItem('attempts_v5_data', JSON.stringify(folders));
+      localStorage.setItem('attempts_v7_data', JSON.stringify(folders));
       renderDashboard();
     }
 
@@ -676,39 +667,40 @@
     function renderDashboard() {
       const totalFolders = folders.length;
       let totalFails = 0;
-      let completedFolders = 0;
-      let totalTriesInCompleted = 0;
+      let totalSuccessfulSteps = 0;
+      let totalTriesForSuccessfulSteps = 0;
 
       folders.forEach(f => {
-        let folderFails = 0;
-        let totalFolderTries = 0;
         let stepsDone = 0;
 
         f.steps.forEach(s => {
           const fails = s.attempts.filter(a => a.outcome === 'failed').length;
-          folderFails += fails;
-          totalFolderTries += s.attempts.length;
-          if (s.status === 'completed') stepsDone++;
+          totalFails += fails;
+
+          if (s.status === 'completed') {
+            stepsDone++;
+            totalSuccessfulSteps++;
+            totalTriesForSuccessfulSteps += s.attempts.length;
+          }
         });
 
-        totalFails += folderFails;
         if (f.steps.length > 0 && stepsDone === f.steps.length) {
           f.status = 'completed';
-          completedFolders++;
-          totalTriesInCompleted += totalFolderTries;
         } else {
           f.status = 'in_progress';
         }
       });
 
-      const avgTries = completedFolders > 0 ? (totalTriesInCompleted / completedFolders).toFixed(1) : "0.0";
+      // Updated Average Logic: Total Tries taken divided by Number of Successful Steps/Results
+      const avgTries = totalSuccessfulSteps > 0 
+        ? (totalTriesForSuccessfulSteps / totalSuccessfulSteps).toFixed(1) 
+        : "0.0";
 
       document.getElementById('st-folders').innerText = totalFolders;
       document.getElementById('st-fails').innerText = totalFails;
-      document.getElementById('st-success').innerText = completedFolders;
+      document.getElementById('st-success').innerText = totalSuccessfulSteps;
       document.getElementById('st-avg').innerText = avgTries;
 
-      // Hero Focus Card Calculation
       const activeFolder = folders.find(f => f.status === 'in_progress') || folders[0];
       if (activeFolder) {
         currentFolderId = activeFolder.id;
@@ -724,6 +716,9 @@
           const ring = document.getElementById('hero-ring');
           const offset = Math.max(0, 226.2 - (tries / 10) * 226.2);
           ring.style.strokeDashoffset = offset;
+        } else {
+          document.getElementById('hero-active-step-name').innerText = "All steps finished!";
+          document.getElementById('hero-count').innerText = 0;
         }
       }
 
@@ -817,6 +812,10 @@
       const container = document.getElementById('steps-container');
       container.innerHTML = '';
 
+      if (folder.steps.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:16px;">No sub-steps remaining. Tap ➕ Add Step above.</p>`;
+      }
+
       folder.steps.forEach(step => {
         const fails = step.attempts.filter(a => a.outcome === 'failed').length;
         const totalTries = step.attempts.length;
@@ -847,6 +846,7 @@
 
           <div style="margin-top:10px; display:flex; gap:8px;">
             <button class="btn-action btn-sm" onclick="openLogForm(${step.id})">✍️ Log Attempt</button>
+            <button class="btn-danger-outline btn-sm" style="margin-left:auto;" onclick="deleteStep(${step.id})">🗑️ Delete Step</button>
           </div>
         `;
         container.appendChild(card);
@@ -865,12 +865,23 @@
           id: Date.now(),
           name: stepName.trim(),
           icon: "🧪",
-          status: "in_progress",
+          status: folder.steps.length === 0 ? "in_progress" : "pending",
           tags: ["Protocol error", "Reagent issue", "Contamination"],
           attempts: []
         });
         saveData();
         openFolderDetail(currentFolderId);
+      }
+    }
+
+    function deleteStep(stepId) {
+      if (confirm("Delete this step and its logged attempts?")) {
+        const folder = folders.find(f => f.id === currentFolderId);
+        if (folder) {
+          folder.steps = folder.steps.filter(s => s.id !== stepId);
+          saveData();
+          openFolderDetail(currentFolderId);
+        }
       }
     }
 
