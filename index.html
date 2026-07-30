@@ -9,24 +9,24 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Attempts">
-  <meta name="theme-color" content="#f8fafc">
+  <meta name="theme-color" content="#fdf2f8">
 
-  <!-- Inter / Plus Jakarta Sans Fonts -->
+  <!-- Plus Jakarta Sans Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 
   <script>
     // Inline PWA Manifest Generation
     const manifest = {
-      "name": "Attempts - Lab Failure Log",
+      "name": "Attempts - Science Tracker",
       "short_name": "Attempts",
       "start_url": "./",
       "display": "standalone",
-      "background_color": "#0f172a",
-      "theme_color": "#0d9488",
+      "background_color": "#120a21",
+      "theme_color": "#ec4899",
       "icons": [{
-        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text y='.85em' x='15' font-size='70'>🧪</text></svg>",
+        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23ec4899'/><text y='.85em' x='15' font-size='70'>🎯</text></svg>",
         "sizes": "512x512",
         "type": "image/svg+xml"
       }]
@@ -40,52 +40,70 @@
 
   <style>
     :root {
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --card-sub: #f1f5f9;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --accent: #0d9488;
-      --accent-light: #ccfbf1;
+      /* Light Barbie & Baby Pink / Violet Palette */
+      --bg: #fdf2f8;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-sub: #fce7f3;
+      --text-main: #581c87;
+      --text-muted: #86198f;
+      --border: #fbcfe8;
+      
+      --accent-pink: #ec4899;
+      --accent-purple: #a855f7;
+      --accent-violet: #7c3aed;
+      
+      --grad-main: linear-gradient(135deg, #f472b6 0%, #a855f7 50%, #7c3aed 100%);
+      --grad-card: linear-gradient(135deg, #ffffff 0%, #fbcfe8 100%);
+      --grad-hero: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 100%);
+
       --danger: #e11d48;
       --danger-bg: #ffe4e6;
       --success: #10b981;
       --success-bg: #d1fae5;
-      --chip-bg: #f1f5f9;
-      --nav-bg: rgba(255, 255, 255, 0.9);
+      --chip-bg: #f3e8ff;
+      --nav-bg: rgba(253, 242, 248, 0.85);
       --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+      --shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.15);
     }
 
     [data-theme="dark"] {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --card-sub: #0f172a;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
-      --accent: #14b8a6;
-      --accent-light: rgba(20, 184, 166, 0.15);
+      /* Dark Mood / Midnight Plum & Glowing Violet */
+      --bg: #120a21;
+      --card-bg: rgba(30, 16, 53, 0.85);
+      --card-sub: #25123e;
+      --text-main: #f472b6;
+      --text-muted: #c084fc;
+      --border: #4c1d95;
+      
+      --accent-pink: #f472b6;
+      --accent-purple: #c084fc;
+      --accent-violet: #a78bfa;
+
+      --grad-main: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #8b5cf6 100%);
+      --grad-card: linear-gradient(135deg, #1e1035 0%, #2e1052 100%);
+      --grad-hero: linear-gradient(135deg, #2a0e4a 0%, #3b0764 100%);
+
       --danger: #fb7185;
-      --danger-bg: rgba(251, 113, 133, 0.15);
+      --danger-bg: rgba(251, 113, 133, 0.2);
       --success: #34d399;
-      --success-bg: rgba(52, 211, 153, 0.15);
-      --chip-bg: #334155;
-      --nav-bg: rgba(30, 41, 59, 0.9);
-      --shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+      --success-bg: rgba(52, 211, 153, 0.2);
+      --chip-bg: #2e1052;
+      --nav-bg: rgba(18, 10, 33, 0.85);
+      --shadow: 0 8px 25px -4px rgba(168, 85, 247, 0.3);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); -webkit-tap-highlight-color: transparent; }
 
     body {
       background-color: var(--bg);
+      background-image: radial-gradient(at 0% 0%, rgba(236, 72, 153, 0.12) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.12) 0px, transparent 50%);
       color: var(--text-main);
       padding: env(safe-area-inset-top, 20px) 16px 100px 16px;
       max-width: 480px;
       margin: 0 auto;
       min-height: 100vh;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     header {
@@ -95,23 +113,38 @@
       padding: 12px 0 16px 0;
     }
 
-    h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
-    .subtitle { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
+    /* Redesigned Clean Main Title */
+    .app-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--grad-main);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 1px;
+    }
 
     .theme-toggle {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       font-size: 1.1rem;
+      box-shadow: var(--shadow);
     }
 
-    /* Stats Dashboard */
+    /* Stats Dashboard Grid */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -120,9 +153,9 @@
     }
 
     .stat-card {
-      background: var(--card-bg);
+      background: var(--grad-card);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 10px 4px;
       text-align: center;
       box-shadow: var(--shadow);
@@ -132,11 +165,11 @@
     .stat-val { font-size: 1.15rem; font-weight: 800; }
     .stat-lbl { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
 
-    /* Hero Card / Current Focus */
+    /* Cards */
     .card {
-      background: var(--card-bg);
+      background: var(--grad-card);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 16px;
       margin-bottom: 16px;
       box-shadow: var(--shadow);
@@ -144,14 +177,14 @@
     }
 
     .hero-card {
-      background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-light) 100%);
+      background: var(--grad-hero);
       border: 1px solid var(--border);
     }
 
     .card-label {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 800;
-      color: var(--accent);
+      color: var(--accent-pink);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 4px;
@@ -176,7 +209,7 @@
     .progress-ring { transform: rotate(-90deg); }
     .progress-ring-circle-bg { stroke: var(--border); }
     .progress-ring-circle {
-      stroke: var(--accent);
+      stroke: var(--accent-pink);
       stroke-dasharray: 226.2;
       stroke-dashoffset: 60;
       transition: stroke-dashoffset 0.4s ease;
@@ -196,9 +229,9 @@
 
     /* Folder List View */
     .folder-item {
-      background: var(--card-bg);
+      background: var(--grad-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 14px 16px;
       margin-bottom: 10px;
       cursor: pointer;
@@ -209,9 +242,9 @@
     }
 
     .folder-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
       background: var(--chip-bg);
       display: flex;
       align-items: center;
@@ -234,7 +267,7 @@
 
     .progress-bar-fill {
       height: 100%;
-      background: var(--accent);
+      background: var(--grad-main);
       border-radius: 4px;
       transition: width 0.3s ease;
     }
@@ -243,7 +276,7 @@
     .step-card {
       background: var(--card-sub);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px;
       margin-bottom: 10px;
     }
@@ -254,32 +287,33 @@
     .step-name { font-size: 0.9rem; font-weight: 700; }
 
     .badge {
-      padding: 2px 8px;
-      border-radius: 6px;
+      padding: 3px 10px;
+      border-radius: 12px;
       font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
     }
 
-    .badge.in_progress { background: var(--accent-light); color: var(--accent); }
+    .badge.in_progress { background: var(--chip-bg); color: var(--accent-purple); }
     .badge.completed { background: var(--success-bg); color: var(--success); }
     .badge.pending { background: var(--chip-bg); color: var(--text-muted); }
 
     .btn-action {
-      background: var(--accent);
+      background: var(--grad-main);
       color: white;
       border: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.85rem;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: var(--shadow);
     }
 
-    .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; }
+    .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 10px; }
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
     .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
 
@@ -287,7 +321,7 @@
     input, select, textarea {
       width: 100%;
       padding: 10px 12px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text-main);
@@ -307,7 +341,7 @@
       color: var(--text-muted);
       cursor: pointer;
     }
-    .chip.selected { background: var(--accent); color: white; border-color: var(--accent); }
+    .chip.selected { background: var(--grad-main); color: white; border-color: transparent; }
 
     .attempt-log-item {
       border-left: 2px solid var(--border);
@@ -329,8 +363,8 @@
       max-width: 480px;
       margin: 0 auto;
       background: var(--nav-bg);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
@@ -350,7 +384,7 @@
       align-items: center;
       gap: 2px;
     }
-    .nav-btn.active { color: var(--accent); }
+    .nav-btn.active { color: var(--accent-pink); }
   </style>
 </head>
 <body>
@@ -359,8 +393,8 @@
   <div id="view-home" class="view active">
     <header>
       <div>
-        <h1>Attempts 🎯</h1>
-        <div class="subtitle">Lab Trial & Failure Log</div>
+        <h1 class="app-title">Attempts</h1>
+        <div class="subtitle">let's see how much to make</div>
       </div>
       <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     </header>
@@ -408,14 +442,14 @@
             <div class="ring-sub">Tries</div>
           </div>
         </div>
-        <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.35;">
+        <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.35;">
           <strong id="hero-active-step-name" style="color:var(--text-main);">Select a step</strong><br>
-          <span id="hero-subtext">Log failed tries until the protocol works.</span>
+          <span id="hero-subtext" style="font-weight: 600; color: var(--accent-purple);">wish me luck 💖</span>
         </div>
       </div>
 
       <button class="btn-action" style="width:100%; justify-content:center;" onclick="quickLogHeroStep()">
-        ✍️ Quick Log Attempt
+        ✍️ Log Attempt
       </button>
     </div>
 
@@ -449,7 +483,7 @@
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
       <span style="font-size: 0.85rem; font-weight: 800; color:var(--text-muted); text-transform:uppercase;">🔬 Sub-Steps</span>
-      <button onclick="addCustomStepPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.8rem; cursor:pointer;">➕ Add Step</button>
+      <button onclick="addCustomStepPrompt()" style="background:none; border:none; color:var(--accent-pink); font-weight:700; font-size:0.8rem; cursor:pointer;">➕ Add Step</button>
     </div>
 
     <div id="steps-container"></div>
@@ -586,7 +620,7 @@
       }
     };
 
-    let folders = JSON.parse(localStorage.getItem('attempts_v4_data')) || [
+    let folders = JSON.parse(localStorage.getItem('attempts_v5_data')) || [
       {
         id: 1,
         name: "pET-28a Cloning",
@@ -630,7 +664,7 @@
     let currentStepId = null;
 
     function saveData() {
-      localStorage.setItem('attempts_v4_data', JSON.stringify(folders));
+      localStorage.setItem('attempts_v5_data', JSON.stringify(folders));
       renderDashboard();
     }
 
@@ -674,7 +708,7 @@
       document.getElementById('st-success').innerText = completedFolders;
       document.getElementById('st-avg').innerText = avgTries;
 
-      // Hero Card Calculation (Active Protocol Focus)
+      // Hero Focus Card Calculation
       const activeFolder = folders.find(f => f.status === 'in_progress') || folders[0];
       if (activeFolder) {
         currentFolderId = activeFolder.id;
@@ -683,7 +717,7 @@
         const activeStep = activeFolder.steps.find(s => s.status === 'in_progress') || activeFolder.steps[0];
         if (activeStep) {
           currentStepId = activeStep.id;
-          document.getElementById('hero-active-step-name').innerText = `${activeStep.icon || '🧪'} Step: ${activeStep.name}`;
+          document.getElementById('hero-active-step-name').innerText = `${activeStep.icon || '🧪'} ${activeStep.name}`;
           const tries = activeStep.attempts.length;
           document.getElementById('hero-count').innerText = tries;
           
