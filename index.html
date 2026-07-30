@@ -130,7 +130,8 @@
       box-shadow: var(--shadow);
     }
 
-    .stat-val { font-size: 1.2rem; font-weight: 800; }
+    .stat-icon { font-size: 1.1rem; margin-bottom: 2px; }
+    .stat-val { font-size: 1.15rem; font-weight: 800; }
     .stat-lbl { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
 
     /* Cards & Containers */
@@ -161,9 +162,21 @@
       margin-bottom: 10px;
       cursor: pointer;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 12px;
       box-shadow: var(--shadow);
+    }
+
+    .folder-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--chip-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
     }
 
     .folder-title { font-size: 0.95rem; font-weight: 700; }
@@ -200,6 +213,13 @@
       align-items: center;
     }
 
+    .step-title-flex {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-icon { font-size: 1.1rem; }
     .step-name { font-size: 0.9rem; font-weight: 700; }
 
     .badge {
@@ -319,26 +339,30 @@
 
     <div class="stats-grid">
       <div class="stat-card">
+        <div class="stat-icon">🧪</div>
         <div class="stat-val" id="st-folders">0</div>
         <div class="stat-lbl">Protocols</div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon">❌</div>
         <div class="stat-val" id="st-fails" style="color:var(--danger)">0</div>
         <div class="stat-lbl">Failures</div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon">⭐</div>
         <div class="stat-val" id="st-success" style="color:var(--success)">0</div>
         <div class="stat-lbl">Done</div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon">📈</div>
         <div class="stat-val" id="st-avg">0.0</div>
         <div class="stat-lbl">Avg Tries</div>
       </div>
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-      <span style="font-size: 0.9rem; font-weight: 800;">Active Protocols</span>
-      <button class="btn-action btn-sm" onclick="openNewFolderModal()">+ New Protocol</button>
+      <span style="font-size: 0.9rem; font-weight: 800;">🧪 Active Protocols</span>
+      <button class="btn-action btn-sm" onclick="openNewFolderModal()">➕ New Protocol</button>
     </div>
 
     <div id="folders-container"></div>
@@ -349,11 +373,11 @@
     <header>
       <button class="btn-outline btn-sm" onclick="switchView('home')">← Back</button>
       <h2 id="folder-detail-name" style="font-size: 1rem; text-align: center;">Protocol</h2>
-      <button class="btn-danger-outline btn-sm" onclick="deleteCurrentFolder()">Delete</button>
+      <button class="btn-danger-outline btn-sm" onclick="deleteCurrentFolder()">🗑️ Delete</button>
     </header>
 
     <div class="card">
-      <div class="card-label">Cumulative Progress</div>
+      <div class="card-label">📊 Cumulative Progress</div>
       <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700;">
         <span id="folder-progress-text">0 / 0 Steps</span>
         <span id="folder-fails-text" style="color:var(--danger);">0 Failures</span>
@@ -364,8 +388,8 @@
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-      <span style="font-size: 0.85rem; font-weight: 800; color:var(--text-muted); text-transform:uppercase;">Protocol Sub-Steps</span>
-      <button onclick="addCustomStepPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.8rem; cursor:pointer;">+ Add Step</button>
+      <span style="font-size: 0.85rem; font-weight: 800; color:var(--text-muted); text-transform:uppercase;">🔬 Protocol Sub-Steps</span>
+      <button onclick="addCustomStepPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.8rem; cursor:pointer;">➕ Add Step</button>
     </div>
 
     <div id="steps-container"></div>
@@ -375,7 +399,7 @@
   <div id="view-log" class="view">
     <header>
       <button class="btn-outline btn-sm" onclick="switchView('folder')">Cancel</button>
-      <h2 style="font-size: 1rem;">Log Sub-Step Attempt</h2>
+      <h2 style="font-size: 1rem;">✍️ Log Attempt</h2>
       <div style="width:50px;"></div>
     </header>
 
@@ -384,35 +408,35 @@
       <strong id="log-step-name" style="font-size:1.05rem;">Step Name</strong>
       
       <div style="margin-top:16px;">
-        <div class="card-label">Result</div>
+        <div class="card-label">Result Outcome</div>
         <select id="log-outcome" onchange="handleOutcomeChange()">
           <option value="failed">❌ Failed Try</option>
-          <option value="success">✅ Successful Try (Step Complete)</option>
+          <option value="success">🎉 Successful Try (Step Complete)</option>
         </select>
       </div>
 
       <div id="reasons-wrapper" style="margin-top:14px;">
-        <div class="card-label">Failure Reason (Select or type custom)</div>
+        <div class="card-label">Failure Reason</div>
         <div class="chips-grid" id="step-chips"></div>
-        <input type="text" id="log-custom-reason" placeholder="Or type failure reason...">
+        <input type="text" id="log-custom-reason" placeholder="Or type custom reason...">
       </div>
 
       <div style="margin-top:14px;">
-        <div class="card-label">Observations / Notes</div>
+        <div class="card-label">📝 Observations / Notes</div>
         <textarea id="log-notes" rows="3" placeholder="Reagent batches, buffer pH, incubation times..."></textarea>
       </div>
 
       <button class="btn-action" style="width:100%; justify-content:center; margin-top:16px;" onclick="saveAttempt()">
-        Save Log Entry
+        💾 Save Log Entry
       </button>
     </div>
   </div>
 
-  <!-- NEW PROTOCOL MODAL (INLINE) -->
+  <!-- NEW PROTOCOL MODAL -->
   <div id="view-new-folder" class="view">
     <header>
       <button class="btn-outline btn-sm" onclick="switchView('home')">Cancel</button>
-      <h2 style="font-size: 1rem;">Create New Protocol</h2>
+      <h2 style="font-size: 1rem;">➕ Create Protocol</h2>
       <div style="width:50px;"></div>
     </header>
 
@@ -422,17 +446,17 @@
 
       <div style="margin-top:14px;">
         <div class="card-label">Workflow Template</div>
-        <select id="new-folder-template" onchange="handleTemplateSelect()">
-          <option value="cloning">🧬 Cloning (5 Steps)</option>
-          <option value="purification">🧪 Protein Purification (4 Steps)</option>
-          <option value="western">📄 Western Blot (4 Steps)</option>
-          <option value="transfection">🧫 Transfection (4 Steps)</option>
+        <select id="new-folder-template">
+          <option value="cloning">🧬 Cloning Workflow</option>
+          <option value="purification">🧪 Protein Purification</option>
+          <option value="western">📄 Western Blot</option>
+          <option value="transfection">🧫 Transfection Assay</option>
           <option value="custom">✏️ Custom Blank Protocol</option>
         </select>
       </div>
 
       <button class="btn-action" style="width:100%; justify-content:center; margin-top:20px;" onclick="createFolder()">
-        Create Protocol
+        🚀 Create Protocol
       </button>
     </div>
   </div>
@@ -457,48 +481,65 @@
       localStorage.setItem('attempts_theme', currentTheme);
     }
 
-    // Default Preset Failure Tags for Lab Workflows
+    // Default Preset Failure Tags and Icons for Lab Workflows
     const TEMPLATES = {
-      cloning: [
-        { name: "Fragment Amplification", tags: ["No band", "Primer dimers", "Smearing", "Wrong size"] },
-        { name: "Restriction Digestion", tags: ["Incomplete cut", "Star activity", "Buffer mismatch"] },
-        { name: "Gel Purification", tags: ["Low yield", "Gel melted poorly", "Salt contamination"] },
-        { name: "Transformation", tags: ["No colonies", "Lawn of bacteria", "Competent cells dead"] },
-        { name: "Colony Screening", tags: ["False positives", "Empty vector", "No insert"] }
-      ],
-      purification: [
-        { name: "Cell Lysis & Harvest", tags: ["Incomplete lysis", "High viscosity", "Proteolysis"] },
-        { name: "Affinity Capture (His/GST)", tags: ["Flow-through loss", "Nonspecific binding", "Precipitation"] },
-        { name: "Tag Cleavage / Dialysis", tags: ["Incomplete cleavage", "Protein aggregated", "Precipitated in buffer"] },
-        { name: "Gel Filtration (SEC)", tags: ["Peak overlap", "Void volume aggregation", "Low concentration"] }
-      ],
-      western: [
-        { name: "Sample Prep & SDS-PAGE", tags: ["Uneven loading", "Smears", "High background"] },
-        { name: "Membrane Transfer", tags: ["Incomplete transfer", "Bubbles", "Over-transfer"] },
-        { name: "Blocking & Antibodies", tags: ["High background", "No signal", "Nonspecific bands"] },
-        { name: "Chemiluminescence / Imaging", tags: ["Signal faded fast", "Overexposed", "Blank blot"] }
-      ],
-      transfection: [
-        { name: "Cell Seeding & Confluency", tags: ["Over-confluent", "Low viability", "Clumped cells"] },
-        { name: "Complex Preparation", tags: ["Wrong ratio", "Reagent degraded", "DNA purity low"] },
-        { name: "Incubation & Wash", tags: ["Cytotoxicity", "Detached cells", "Contamination"] },
-        { name: "Expression Harvest", tags: ["Low expression", "No target signal", "Poor yield"] }
-      ],
-      custom: [
-        { name: "Step 1", tags: ["Protocol error", "Reagent issue", "Contamination"] }
-      ]
+      cloning: {
+        icon: "🧬",
+        steps: [
+          { name: "Fragment Amplification", icon: "🧬", tags: ["No band", "Primer dimers", "Smearing", "Wrong size"] },
+          { name: "Restriction Digestion", icon: "✂️", tags: ["Incomplete cut", "Star activity", "Buffer mismatch"] },
+          { name: "Gel Purification", icon: "🧪", tags: ["Low yield", "Gel melted poorly", "Salt contamination"] },
+          { name: "Transformation", icon: "🧫", tags: ["No colonies", "Lawn of bacteria", "Competent cells dead"] },
+          { name: "Colony Screening", icon: "🔍", tags: ["False positives", "Empty vector", "No insert"] }
+        ]
+      },
+      purification: {
+        icon: "🧪",
+        steps: [
+          { name: "Cell Lysis & Harvest", icon: "🧫", tags: ["Incomplete lysis", "High viscosity", "Proteolysis"] },
+          { name: "Affinity Capture (His/GST)", icon: "🧲", tags: ["Flow-through loss", "Nonspecific binding", "Precipitation"] },
+          { name: "Tag Cleavage / Dialysis", icon: "✂️", tags: ["Incomplete cleavage", "Protein aggregated", "Precipitated in buffer"] },
+          { name: "Gel Filtration (SEC)", icon: "📊", tags: ["Peak overlap", "Void volume aggregation", "Low concentration"] }
+        ]
+      },
+      western: {
+        icon: "📄",
+        steps: [
+          { name: "Sample Prep & SDS-PAGE", icon: "🧪", tags: ["Uneven loading", "Smears", "High background"] },
+          { name: "Membrane Transfer", icon: "⚡", tags: ["Incomplete transfer", "Bubbles", "Over-transfer"] },
+          { name: "Blocking & Antibodies", icon: "🧫", tags: ["High background", "No signal", "Nonspecific bands"] },
+          { name: "Chemiluminescence / Imaging", icon: "📸", tags: ["Signal faded fast", "Overexposed", "Blank blot"] }
+        ]
+      },
+      transfection: {
+        icon: "🧫",
+        steps: [
+          { name: "Cell Seeding & Confluency", icon: "🌱", tags: ["Over-confluent", "Low viability", "Clumped cells"] },
+          { name: "Complex Preparation", icon: "🧪", tags: ["Wrong ratio", "Reagent degraded", "DNA purity low"] },
+          { name: "Incubation & Wash", icon: "⏳", tags: ["Cytotoxicity", "Detached cells", "Contamination"] },
+          { name: "Expression Harvest", icon: "🔬", tags: ["Low expression", "No target signal", "Poor yield"] }
+        ]
+      },
+      custom: {
+        icon: "📁",
+        steps: [
+          { name: "Step 1", icon: "🧪", tags: ["Protocol error", "Reagent issue", "Contamination"] }
+        ]
+      }
     };
 
     // App State
-    let folders = JSON.parse(localStorage.getItem('attempts_v2_data')) || [
+    let folders = JSON.parse(localStorage.getItem('attempts_v3_data')) || [
       {
         id: 1,
         name: "pET-28a Cloning",
+        icon: "🧬",
         status: "in_progress",
         steps: [
           {
             id: 101,
             name: "Fragment Amplification",
+            icon: "🧬",
             status: "completed",
             tags: ["No band", "Primer dimers"],
             attempts: [
@@ -509,6 +550,7 @@
           {
             id: 102,
             name: "Restriction Digestion",
+            icon: "✂️",
             status: "completed",
             tags: ["Incomplete cut", "Star activity"],
             attempts: [
@@ -518,14 +560,15 @@
           {
             id: 103,
             name: "Gel Purification",
+            icon: "🧪",
             status: "in_progress",
             tags: ["Low yield", "Salt contamination"],
             attempts: [
               { num: 1, outcome: "failed", reason: "Low yield", notes: "Eluted with 15µl water. Recovery <10ng/µl.", date: "23 Jul" }
             ]
           },
-          { id: 104, name: "Transformation", status: "pending", tags: ["No colonies"], attempts: [] },
-          { id: 105, name: "Colony Screening", status: "pending", tags: ["False positives"], attempts: [] }
+          { id: 104, name: "Transformation", icon: "🧫", status: "pending", tags: ["No colonies"], attempts: [] },
+          { id: 105, name: "Colony Screening", icon: "🔍", status: "pending", tags: ["False positives"], attempts: [] }
         ]
       }
     ];
@@ -534,7 +577,7 @@
     let currentStepId = null;
 
     function saveData() {
-      localStorage.setItem('attempts_v2_data', JSON.stringify(folders));
+      localStorage.setItem('attempts_v3_data', JSON.stringify(folders));
       renderDashboard();
     }
 
@@ -564,7 +607,6 @@
 
         totalFails += folderFails;
         
-        // Check auto-completion of entire folder
         if (f.steps.length > 0 && stepsDone === f.steps.length) {
           f.status = 'completed';
           completedFolders++;
@@ -585,7 +627,7 @@
       container.innerHTML = '';
 
       if (folders.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">No protocols logged yet. Tap + New Protocol above.</p>`;
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">No protocols logged yet. Tap ➕ New Protocol above.</p>`;
         return;
       }
 
@@ -598,12 +640,13 @@
         el.className = 'folder-item';
         el.onclick = () => openFolderDetail(f.id);
         el.innerHTML = `
+          <div class="folder-icon">${f.icon || '🧪'}</div>
           <div style="width:100%;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span class="folder-title">${f.name}</span>
-              <span class="badge ${f.status}">${f.status === 'completed' ? 'Completed' : 'In Progress'}</span>
+              <span class="badge ${f.status}">${f.status === 'completed' ? '🎉 Done' : '⏳ In Progress'}</span>
             </div>
-            <div class="folder-meta">${completedSteps} / ${f.steps.length} Steps Done · <span style="color:var(--danger);">${totalFailsInFolder} Failures</span></div>
+            <div class="folder-meta">${completedSteps} / ${f.steps.length} Steps · <span style="color:var(--danger);">${totalFailsInFolder} Failures</span></div>
             <div class="progress-bar-bg">
               <div class="progress-bar-fill" style="width: ${percent}%;"></div>
             </div>
@@ -624,14 +667,16 @@
       const templateKey = document.getElementById('new-folder-template').value;
       if (!name) return;
 
-      const templateSteps = TEMPLATES[templateKey] || TEMPLATES.custom;
+      const templateObj = TEMPLATES[templateKey] || TEMPLATES.custom;
       const newFolder = {
         id: Date.now(),
         name: name,
+        icon: templateObj.icon,
         status: "in_progress",
-        steps: templateSteps.map((st, idx) => ({
+        steps: templateObj.steps.map((st, idx) => ({
           id: Date.now() + idx,
           name: st.name,
+          icon: st.icon || '🧪',
           status: idx === 0 ? "in_progress" : "pending",
           tags: st.tags,
           attempts: []
@@ -649,7 +694,7 @@
       const folder = folders.find(f => f.id === folderId);
       if (!folder) return;
 
-      document.getElementById('folder-detail-name').innerText = folder.name;
+      document.getElementById('folder-detail-name').innerText = `${folder.icon || '🧪'} ${folder.name}`;
       
       const completedSteps = folder.steps.filter(s => s.status === 'completed').length;
       const totalFails = folder.steps.reduce((acc, s) => acc + s.attempts.filter(a => a.outcome === 'failed').length, 0);
@@ -670,25 +715,28 @@
         card.className = 'step-card';
         card.innerHTML = `
           <div class="step-header">
-            <div>
-              <span class="step-name">${step.name}</span>
-              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
-                ${totalTries} Tries (${fails} Failures)
+            <div class="step-title-flex">
+              <span class="step-icon">${step.icon || '🧪'}</span>
+              <div>
+                <span class="step-name">${step.name}</span>
+                <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
+                  ${totalTries} Tries (${fails} Failures)
+                </div>
               </div>
             </div>
-            <span class="badge ${step.status}">${step.status.replace('_', ' ')}</span>
+            <span class="badge ${step.status}">${step.status === 'completed' ? '🎉 Done' : step.status === 'in_progress' ? '⏳ Active' : '🔒 Pending'}</span>
           </div>
 
           <div style="margin-top:10px;">
             ${step.attempts.map(a => `
               <div class="attempt-log-item ${a.outcome}">
-                <strong>Try #${a.num} (${a.outcome.toUpperCase()}):</strong> ${a.reason ? `[${a.reason}] ` : ''}${a.notes}
+                <strong>Try #${a.num} (${a.outcome === 'success' ? '🎉 SUCCESS' : '❌ FAILED'}):</strong> ${a.reason ? `[${a.reason}] ` : ''}${a.notes}
               </div>
             `).join('')}
           </div>
 
           <div style="margin-top:10px; display:flex; gap:8px;">
-            <button class="btn-action btn-sm" onclick="openLogForm(${step.id})">+ Log Try</button>
+            <button class="btn-action btn-sm" onclick="openLogForm(${step.id})">✍️ Log Attempt</button>
           </div>
         `;
         container.appendChild(card);
@@ -706,6 +754,7 @@
         folder.steps.push({
           id: Date.now(),
           name: stepName.trim(),
+          icon: "🧪",
           status: "in_progress",
           tags: ["Protocol error", "Reagent issue", "Contamination"],
           attempts: []
@@ -730,7 +779,7 @@
       const step = folder.steps.find(s => s.id === stepId);
       if (!step) return;
 
-      document.getElementById('log-step-name').innerText = step.name;
+      document.getElementById('log-step-name').innerText = `${step.icon || '🧪'} ${step.name}`;
       document.getElementById('log-outcome').value = 'failed';
       document.getElementById('log-custom-reason').value = '';
       document.getElementById('log-notes').value = '';
@@ -778,7 +827,6 @@
 
       if (outcome === 'success') {
         step.status = 'completed';
-        // Unlock next step if pending
         const currentIdx = folder.steps.findIndex(s => s.id === currentStepId);
         if (currentIdx < folder.steps.length - 1 && folder.steps[currentIdx + 1].status === 'pending') {
           folder.steps[currentIdx + 1].status = 'in_progress';
