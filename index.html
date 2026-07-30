@@ -11,22 +11,22 @@
   <meta name="apple-mobile-web-app-title" content="Attempts">
   <meta name="theme-color" content="#f8fafc">
 
-  <!-- Inter & Caveat/Handwritten Fonts -->
+  <!-- Inter / Plus Jakarta Sans Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     // Inline PWA Manifest Generation
     const manifest = {
-      "name": "Attempts - Science Tracker",
+      "name": "Attempts - Lab Failure Log",
       "short_name": "Attempts",
       "start_url": "./",
       "display": "standalone",
-      "background_color": "#090d16",
-      "theme_color": "#7c3aed",
+      "background_color": "#0f172a",
+      "theme_color": "#0d9488",
       "icons": [{
-        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c3aed'/><text y='.85em' x='15' font-size='70'>🧪</text></svg>",
+        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text y='.85em' x='15' font-size='70'>🧪</text></svg>",
         "sizes": "512x512",
         "type": "image/svg+xml"
       }]
@@ -42,40 +42,38 @@
     :root {
       --bg: #f8fafc;
       --card-bg: #ffffff;
-      --card-secondary: #f1f5f9;
+      --card-sub: #f1f5f9;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
-      --accent: #7c3aed;
-      --accent-light: #f3e8ff;
-      --accent-gradient: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
-      --danger: #ef4444;
-      --danger-bg: #fef2f2;
+      --accent: #0d9488;
+      --accent-light: #ccfbf1;
+      --danger: #e11d48;
+      --danger-bg: #ffe4e6;
       --success: #10b981;
-      --success-bg: #ecfdf5;
+      --success-bg: #d1fae5;
       --chip-bg: #f1f5f9;
-      --nav-bg: rgba(255, 255, 255, 0.85);
-      --font-hand: 'Caveat', cursive;
+      --nav-bg: rgba(255, 255, 255, 0.9);
       --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      --shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05);
     }
 
     [data-theme="dark"] {
-      --bg: #090d16;
-      --card-bg: #131927;
-      --card-secondary: #1a2234;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-sub: #0f172a;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --border: #1e293b;
-      --accent: #8b5cf6;
-      --accent-light: rgba(139, 92, 246, 0.15);
-      --danger: #f87171;
-      --danger-bg: rgba(239, 68, 68, 0.15);
+      --border: #334155;
+      --accent: #14b8a6;
+      --accent-light: rgba(20, 184, 166, 0.15);
+      --danger: #fb7185;
+      --danger-bg: rgba(251, 113, 133, 0.15);
       --success: #34d399;
-      --success-bg: rgba(16, 185, 129, 0.15);
-      --chip-bg: #1e293b;
-      --nav-bg: rgba(19, 25, 39, 0.85);
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      --success-bg: rgba(52, 211, 153, 0.15);
+      --chip-bg: #334155;
+      --nav-bg: rgba(30, 41, 59, 0.9);
+      --shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); -webkit-tap-highlight-color: transparent; }
@@ -87,39 +85,35 @@
       max-width: 480px;
       margin: 0 auto;
       min-height: 100vh;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    /* Header */
     header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       padding: 12px 0 20px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
     }
 
-    .greeting-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      line-height: 1.3;
-    }
+    h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
+    .subtitle { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
 
     .theme-toggle {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.2rem;
-      box-shadow: var(--shadow);
+      font-size: 1.1rem;
     }
 
-    /* Stats Grid */
+    /* Stats Dashboard */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -130,293 +124,155 @@
     .stat-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 6px;
+      border-radius: 12px;
+      padding: 10px 4px;
       text-align: center;
       box-shadow: var(--shadow);
     }
 
-    .stat-icon { font-size: 1.2rem; margin-bottom: 4px; }
-    .stat-value { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
-    .stat-label { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+    .stat-val { font-size: 1.2rem; font-weight: 800; }
+    .stat-lbl { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
 
-    /* Cards */
+    /* Cards & Containers */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 20px;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
       box-shadow: var(--shadow);
-      position: relative;
     }
 
-    .hero-card {
-      background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-light) 100%);
-      border: 1px solid var(--border);
-    }
-
-    .card-subtitle {
-      font-size: 0.75rem;
-      font-weight: 700;
+    .card-label {
+      font-size: 0.7rem;
+      font-weight: 800;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
 
-    .hero-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin: 16px 0;
-    }
-
-    /* Radial Progress Ring */
-    .progress-ring-container {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      flex-shrink: 0;
-    }
-
-    .progress-ring {
-      transform: rotate(-90deg);
-    }
-
-    .progress-ring-circle-bg {
-      stroke: var(--border);
-    }
-
-    .progress-ring-circle {
-      stroke: var(--accent);
-      stroke-dasharray: 251.2;
-      stroke-dashoffset: 80;
-      transition: stroke-dashoffset 0.5s ease;
-      stroke-linecap: round;
-    }
-
-    .ring-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    }
-
-    .ring-num { font-size: 1.6rem; font-weight: 800; line-height: 1; }
-    .ring-sub { font-size: 0.65rem; color: var(--text-muted); }
-
-    .hero-message {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* Buttons */
-    .btn-primary {
-      width: 100%;
-      background: var(--accent-gradient);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 14px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-    }
-
-    /* Section Titles */
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .section-title { font-size: 1rem; font-weight: 700; }
-
-    /* Experiment List */
-    .exp-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .exp-row {
+    /* Folder List View */
+    .folder-item {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      margin-bottom: 10px;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       box-shadow: var(--shadow);
     }
 
-    .exp-info { display: flex; align-items: center; gap: 12px; }
-    .exp-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+    .folder-title { font-size: 0.95rem; font-weight: 700; }
+    .folder-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
       background: var(--chip-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
+      border-radius: 4px;
+      margin-top: 8px;
+      overflow: hidden;
     }
 
-    .exp-title { font-size: 0.95rem; font-weight: 700; }
-    .exp-status { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-    .status-dot.success { background: var(--success); }
-
-    .exp-count { text-align: right; }
-    .exp-count-num { font-size: 1rem; font-weight: 800; }
-    .exp-count-label { font-size: 0.65rem; color: var(--text-muted); }
-
-    /* Sticky Quote Note */
-    .quote-card {
-      background: #fef08a;
-      color: #713f12;
-      border-radius: 16px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    [data-theme="dark"] .quote-card { background: #422006; color: #fef08a; }
-
-    .quote-text { font-family: var(--font-hand); font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
-
-    /* Views Framework */
-    .view { display: none; }
-    .view.active { display: block; }
-
-    /* Form Screen Styles */
-    .counter-control {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin: 16px 0;
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 4px;
+      transition: width 0.3s ease;
     }
 
-    .btn-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
+    /* Sub-Steps Accordion / List */
+    .step-card {
+      background: var(--card-sub);
       border: 1px solid var(--border);
-      background: var(--card-bg);
-      color: var(--text-main);
-      font-size: 1.2rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .count-display { font-size: 2.2rem; font-weight: 800; }
-
-    .segmented-control {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 12px 0;
-    }
-
-    .segment-btn {
-      padding: 12px;
       border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: var(--card-bg);
-      color: var(--text-main);
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .step-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
+    }
+
+    .step-name { font-size: 0.9rem; font-weight: 700; }
+
+    .badge {
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge.in_progress { background: var(--accent-light); color: var(--accent); }
+    .badge.completed { background: var(--success-bg); color: var(--success); }
+    .badge.pending { background: var(--chip-bg); color: var(--text-muted); }
+
+    .btn-action {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
     }
 
-    .segment-btn.selected-fail { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
-    .segment-btn.selected-success { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+    .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+    .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
 
-    .chips-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    /* Input & Chip Styles */
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-main);
+      font-size: 0.88rem;
+      margin-top: 6px;
+      outline: none;
+    }
+
+    .chips-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .chip {
       background: var(--chip-bg);
       border: 1px solid var(--border);
-      padding: 8px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      padding: 6px 10px;
+      border-radius: 16px;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
     }
     .chip.selected { background: var(--accent); color: white; border-color: var(--accent); }
 
-    textarea, input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--card-secondary);
-      color: var(--text-main);
-      font-size: 0.9rem;
-      outline: none;
-      margin-top: 6px;
+    /* Log Timeline */
+    .attempt-log-item {
+      border-left: 2px solid var(--border);
+      padding-left: 10px;
+      margin: 8px 0;
+      font-size: 0.8rem;
     }
+    .attempt-log-item.failed { border-left-color: var(--danger); }
+    .attempt-log-item.success { border-left-color: var(--success); }
 
-    /* Timeline View Styles */
-    .timeline {
-      position: relative;
-      padding-left: 28px;
-      margin: 16px 0;
-    }
+    /* Views Navigation */
+    .view { display: none; }
+    .view.active { display: block; }
 
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 10px;
-      top: 10px;
-      bottom: 10px;
-      width: 2px;
-      background: var(--border);
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 16px;
-    }
-
-    .timeline-badge {
-      position: absolute;
-      left: -28px;
-      top: 12px;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--card-bg);
-      border: 2px solid var(--accent);
-      color: var(--accent);
-      font-size: 0.7rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .timeline-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
-    }
-
-    /* Navigation Bar */
+    /* Fixed Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -425,202 +281,167 @@
       max-width: 480px;
       margin: 0 auto;
       background: var(--nav-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
-      align-items: center;
-      padding: 10px 0 env(safe-area-inset-bottom, 12px) 0;
+      padding: 10px 0 env(safe-area-inset-bottom, 10px) 0;
       z-index: 100;
     }
 
-    .nav-item {
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      background: none;
+      gap: 2px;
     }
-
-    .nav-item.active { color: var(--accent); }
-
-    .nav-fab {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--accent-gradient);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
-      margin-top: -20px;
-      cursor: pointer;
-      border: none;
-    }
+    .nav-btn.active { color: var(--accent); }
   </style>
 </head>
 <body>
 
-  <!-- VIEW 1: HOME DASHBOARD -->
+  <!-- VIEW 1: MAIN DASHBOARD -->
   <div id="view-home" class="view active">
     <header>
       <div>
-        <h1 style="font-size: 1.3rem;">Good morning, Researcher! ☀️</h1>
-        <p class="greeting-subtitle">Every failed attempt is data.<br>Keep experimenting, keep growing! 🌱</p>
+        <h1>Attempts 🎯</h1>
+        <div class="subtitle">Lab Trial & Failure Log</div>
       </div>
       <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     </header>
 
-    <!-- Top Key Metrics -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-icon">🧪</div>
-        <div class="stat-value" id="stat-total-exp">0</div>
-        <div class="stat-label">Total Exp</div>
+        <div class="stat-val" id="st-folders">0</div>
+        <div class="stat-lbl">Protocols</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">❌</div>
-        <div class="stat-value" id="stat-failed">0</div>
-        <div class="stat-label">Failures</div>
+        <div class="stat-val" id="st-fails" style="color:var(--danger)">0</div>
+        <div class="stat-lbl">Failures</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">⭐</div>
-        <div class="stat-value" id="stat-success">0</div>
-        <div class="stat-label">Successes</div>
+        <div class="stat-val" id="st-success" style="color:var(--success)">0</div>
+        <div class="stat-lbl">Done</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">📈</div>
-        <div class="stat-value" id="stat-avg">0</div>
-        <div class="stat-label">Avg / Success</div>
+        <div class="stat-val" id="st-avg">0.0</div>
+        <div class="stat-lbl">Avg Tries</div>
       </div>
     </div>
 
-    <!-- Active Target Experiment Hero Card -->
-    <div class="card hero-card" id="hero-experiment-card">
-      <div class="card-subtitle">Current Focus</div>
-      <h2 id="hero-title" style="font-size: 1.2rem;">No Active Protocol</h2>
-      
-      <div class="hero-flex">
-        <div class="progress-ring-container">
-          <svg class="progress-ring" width="100" height="100">
-            <circle class="progress-ring-circle-bg" stroke-width="8" fill="transparent" r="40" cx="50" cy="50"/>
-            <circle id="hero-ring" class="progress-ring-circle" stroke-width="8" fill="transparent" r="40" cx="50" cy="50"/>
-          </svg>
-          <div class="ring-text">
-            <div class="ring-num" id="hero-attempts-count">0</div>
-            <div class="ring-sub">Attempts</div>
-          </div>
-        </div>
-        <div class="hero-message">
-          <strong>You're doing great! 💜</strong><br>
-          <span id="hero-hint">Start an experiment or log a trial to track your luck quota.</span>
-        </div>
-      </div>
-
-      <button class="btn-primary" onclick="openLogScreen()">
-        <span>➕</span> Log New Attempt
-      </button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+      <span style="font-size: 0.9rem; font-weight: 800;">Active Protocols</span>
+      <button class="btn-action btn-sm" onclick="openNewFolderModal()">+ New Protocol</button>
     </div>
 
-    <!-- Recent Protocols Section -->
-    <div class="section-header">
-      <span class="section-title">🧪 Experiments</span>
-      <button onclick="createNewExperimentPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.85rem; cursor:pointer;">+ New</button>
-    </div>
-
-    <div class="exp-list" id="experiments-list"></div>
-
-    <!-- Sticky Affirmation Note -->
-    <div class="quote-card">
-      <div>
-        <div class="quote-text">Science is 1% inspiration and<br>99% persistence. ✨</div>
-      </div>
-      <div style="font-size: 1.8rem;">📌</div>
-    </div>
+    <div id="folders-container"></div>
   </div>
 
-  <!-- VIEW 2: LOG ATTEMPT FORM -->
+  <!-- VIEW 2: FOLDER DETAIL (SUB-STEPS) -->
+  <div id="view-folder" class="view">
+    <header>
+      <button class="btn-outline btn-sm" onclick="switchView('home')">← Back</button>
+      <h2 id="folder-detail-name" style="font-size: 1rem; text-align: center;">Protocol</h2>
+      <button class="btn-danger-outline btn-sm" onclick="deleteCurrentFolder()">Delete</button>
+    </header>
+
+    <div class="card">
+      <div class="card-label">Cumulative Progress</div>
+      <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700;">
+        <span id="folder-progress-text">0 / 0 Steps</span>
+        <span id="folder-fails-text" style="color:var(--danger);">0 Failures</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="folder-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+      <span style="font-size: 0.85rem; font-weight: 800; color:var(--text-muted); text-transform:uppercase;">Protocol Sub-Steps</span>
+      <button onclick="addCustomStepPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.8rem; cursor:pointer;">+ Add Step</button>
+    </div>
+
+    <div id="steps-container"></div>
+  </div>
+
+  <!-- VIEW 3: LOG ATTEMPT FORM -->
   <div id="view-log" class="view">
     <header>
-      <button onclick="switchView('home')" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-main)">←</button>
-      <h2 style="font-size: 1.1rem;">Log New Attempt</h2>
-      <div style="width:24px;"></div>
+      <button class="btn-outline btn-sm" onclick="switchView('folder')">Cancel</button>
+      <h2 style="font-size: 1rem;">Log Sub-Step Attempt</h2>
+      <div style="width:50px;"></div>
     </header>
 
     <div class="card">
-      <div class="card-subtitle">Active Experiment</div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-        <strong id="log-exp-name" style="font-size: 1.1rem;">Select Experiment</strong>
-        <button onclick="switchView('home')" style="background:var(--chip-bg); border:none; padding:4px 10px; border-radius:8px; font-size:0.75rem; color:var(--text-main);">Change</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-subtitle" style="text-align: center;">Attempt Number</div>
-      <div class="counter-control">
-        <button class="btn-circle" onclick="adjustAttemptCount(-1)">-</button>
-        <span class="count-display" id="log-attempt-num">1</span>
-        <button class="btn-circle" onclick="adjustAttemptCount(1)">+</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-subtitle">Result Outcome</div>
-      <div class="segmented-control">
-        <button id="btn-result-fail" class="segment-btn selected-fail" onclick="setResultOutcome('failed')">❌ Failed</button>
-        <button id="btn-result-success" class="segment-btn" onclick="setResultOutcome('success')">✅ Success</button>
+      <div class="card-label">Sub-Step</div>
+      <strong id="log-step-name" style="font-size:1.05rem;">Step Name</strong>
+      
+      <div style="margin-top:16px;">
+        <div class="card-label">Result</div>
+        <select id="log-outcome" onchange="handleOutcomeChange()">
+          <option value="failed">❌ Failed Try</option>
+          <option value="success">✅ Successful Try (Step Complete)</option>
+        </select>
       </div>
 
-      <div id="reason-section">
-        <div class="card-subtitle" style="margin-top: 14px;">Reason for Failure (Optional)</div>
-        <div class="chips-grid" id="chips-container">
-          <div class="chip" onclick="toggleChip(this)">Cells unhealthy</div>
-          <div class="chip" onclick="toggleChip(this)">Low yield</div>
-          <div class="chip" onclick="toggleChip(this)">Wrong ratio</div>
-          <div class="chip" onclick="toggleChip(this)">Reagent issue</div>
-          <div class="chip" onclick="toggleChip(this)">Contamination</div>
-          <div class="chip" onclick="toggleChip(this)">Experimental error</div>
-        </div>
+      <div id="reasons-wrapper" style="margin-top:14px;">
+        <div class="card-label">Failure Reason (Select or type custom)</div>
+        <div class="chips-grid" id="step-chips"></div>
+        <input type="text" id="log-custom-reason" placeholder="Or type failure reason...">
       </div>
 
-      <div class="card-subtitle" style="margin-top: 14px;">Notes / Observations</div>
-      <textarea id="log-notes" rows="3" placeholder="Write specific buffer tweaks, parameters, or observations..."></textarea>
+      <div style="margin-top:14px;">
+        <div class="card-label">Observations / Notes</div>
+        <textarea id="log-notes" rows="3" placeholder="Reagent batches, buffer pH, incubation times..."></textarea>
+      </div>
 
-      <button class="btn-primary" style="margin-top: 16px;" onclick="saveAttempt()">
-        <span>💾</span> Save Attempt
+      <button class="btn-action" style="width:100%; justify-content:center; margin-top:16px;" onclick="saveAttempt()">
+        Save Log Entry
       </button>
     </div>
   </div>
 
-  <!-- VIEW 3: TIMELINE / DETAILS -->
-  <div id="view-details" class="view">
+  <!-- NEW PROTOCOL MODAL (INLINE) -->
+  <div id="view-new-folder" class="view">
     <header>
-      <button onclick="switchView('home')" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-main)">←</button>
-      <h2 id="details-title" style="font-size: 1.1rem;">Protocol Details</h2>
-      <button onclick="deleteCurrentExperiment()" style="background:none; border:none; color:var(--danger); font-size:0.85rem; font-weight:700;">Delete</button>
+      <button class="btn-outline btn-sm" onclick="switchView('home')">Cancel</button>
+      <h2 style="font-size: 1rem;">Create New Protocol</h2>
+      <div style="width:50px;"></div>
     </header>
 
-    <div id="details-timeline-container"></div>
+    <div class="card">
+      <div class="card-label">Protocol Name</div>
+      <input type="text" id="new-folder-name" placeholder="e.g., pET-28a Cloning">
+
+      <div style="margin-top:14px;">
+        <div class="card-label">Workflow Template</div>
+        <select id="new-folder-template" onchange="handleTemplateSelect()">
+          <option value="cloning">🧬 Cloning (5 Steps)</option>
+          <option value="purification">🧪 Protein Purification (4 Steps)</option>
+          <option value="western">📄 Western Blot (4 Steps)</option>
+          <option value="transfection">🧫 Transfection (4 Steps)</option>
+          <option value="custom">✏️ Custom Blank Protocol</option>
+        </select>
+      </div>
+
+      <button class="btn-action" style="width:100%; justify-content:center; margin-top:20px;" onclick="createFolder()">
+        Create Protocol
+      </button>
+    </div>
   </div>
 
-  <!-- Bottom Global Navigation -->
+  <!-- NAV BAR -->
   <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchView('home')">
-      <span style="font-size: 1.2rem;">🏠</span>
-      <span>Home</span>
-    </button>
-    <button class="nav-fab" onclick="openLogScreen()">+</button>
-    <button class="nav-item" onclick="switchView('home')">
-      <span style="font-size: 1.2rem;">📊</span>
-      <span>Stats</span>
+    <button class="nav-btn active" onclick="switchView('home')">
+      <span style="font-size:1.1rem;">🧪</span>
+      <span>Protocols</span>
     </button>
   </nav>
 
@@ -636,260 +457,344 @@
       localStorage.setItem('attempts_theme', currentTheme);
     }
 
-    // App State Management
-    let experiments = JSON.parse(localStorage.getItem('attempts_data')) || [
+    // Default Preset Failure Tags for Lab Workflows
+    const TEMPLATES = {
+      cloning: [
+        { name: "Fragment Amplification", tags: ["No band", "Primer dimers", "Smearing", "Wrong size"] },
+        { name: "Restriction Digestion", tags: ["Incomplete cut", "Star activity", "Buffer mismatch"] },
+        { name: "Gel Purification", tags: ["Low yield", "Gel melted poorly", "Salt contamination"] },
+        { name: "Transformation", tags: ["No colonies", "Lawn of bacteria", "Competent cells dead"] },
+        { name: "Colony Screening", tags: ["False positives", "Empty vector", "No insert"] }
+      ],
+      purification: [
+        { name: "Cell Lysis & Harvest", tags: ["Incomplete lysis", "High viscosity", "Proteolysis"] },
+        { name: "Affinity Capture (His/GST)", tags: ["Flow-through loss", "Nonspecific binding", "Precipitation"] },
+        { name: "Tag Cleavage / Dialysis", tags: ["Incomplete cleavage", "Protein aggregated", "Precipitated in buffer"] },
+        { name: "Gel Filtration (SEC)", tags: ["Peak overlap", "Void volume aggregation", "Low concentration"] }
+      ],
+      western: [
+        { name: "Sample Prep & SDS-PAGE", tags: ["Uneven loading", "Smears", "High background"] },
+        { name: "Membrane Transfer", tags: ["Incomplete transfer", "Bubbles", "Over-transfer"] },
+        { name: "Blocking & Antibodies", tags: ["High background", "No signal", "Nonspecific bands"] },
+        { name: "Chemiluminescence / Imaging", tags: ["Signal faded fast", "Overexposed", "Blank blot"] }
+      ],
+      transfection: [
+        { name: "Cell Seeding & Confluency", tags: ["Over-confluent", "Low viability", "Clumped cells"] },
+        { name: "Complex Preparation", tags: ["Wrong ratio", "Reagent degraded", "DNA purity low"] },
+        { name: "Incubation & Wash", tags: ["Cytotoxicity", "Detached cells", "Contamination"] },
+        { name: "Expression Harvest", tags: ["Low expression", "No target signal", "Poor yield"] }
+      ],
+      custom: [
+        { name: "Step 1", tags: ["Protocol error", "Reagent issue", "Contamination"] }
+      ]
+    };
+
+    // App State
+    let folders = JSON.parse(localStorage.getItem('attempts_v2_data')) || [
       {
-        id: 101,
-        name: "KFD NS5 Transfection",
+        id: 1,
+        name: "pET-28a Cloning",
         status: "in_progress",
-        attempts: [
-          { num: 1, outcome: "failed", reason: "Cells unhealthy", notes: "Cells were not healthy prior to transfection.", date: "22 Jul" },
-          { num: 2, outcome: "failed", reason: "Low yield", notes: "Low confluency observed.", date: "22 Jul" },
-          { num: 3, outcome: "failed", reason: "Wrong ratio", notes: "DNA:Lipofectamine ratio was off.", date: "23 Jul" },
-          { num: 4, outcome: "failed", reason: "Reagent issue", notes: "Lipofectamine expired?", date: "24 Jul" },
-          { num: 5, outcome: "failed", reason: "Low yield", notes: "Low GFP expression.", date: "25 Jul" }
-        ]
-      },
-      {
-        id: 102,
-        name: "Colony PCR",
-        status: "in_progress",
-        attempts: [
-          { num: 1, outcome: "failed", reason: "Experimental error", notes: "Annealing temp too high.", date: "20 Jul" },
-          { num: 2, outcome: "failed", reason: "Contamination", notes: "Primer dimer bands only.", date: "21 Jul" },
-          { num: 3, outcome: "failed", reason: "Reagent issue", notes: "Taq polymerase inactive.", date: "22 Jul" }
-        ]
-      },
-      {
-        id: 103,
-        name: "Cell Revival",
-        status: "completed",
-        attempts: [
-          { num: 1, outcome: "failed", reason: "Cells unhealthy", notes: "Slow thawing rate.", date: "15 Jul" },
-          { num: 2, outcome: "success", reason: "", notes: "Optimal DMSO washout executed.", date: "16 Jul" }
+        steps: [
+          {
+            id: 101,
+            name: "Fragment Amplification",
+            status: "completed",
+            tags: ["No band", "Primer dimers"],
+            attempts: [
+              { num: 1, outcome: "failed", reason: "Primer dimers", notes: "Annealing temp 52°C too low.", date: "20 Jul" },
+              { num: 2, outcome: "success", reason: "", notes: "Raised annealing temp to 58°C. Clean band.", date: "21 Jul" }
+            ]
+          },
+          {
+            id: 102,
+            name: "Restriction Digestion",
+            status: "completed",
+            tags: ["Incomplete cut", "Star activity"],
+            attempts: [
+              { num: 1, outcome: "success", reason: "", notes: "Double digest overnight at 37°C.", date: "22 Jul" }
+            ]
+          },
+          {
+            id: 103,
+            name: "Gel Purification",
+            status: "in_progress",
+            tags: ["Low yield", "Salt contamination"],
+            attempts: [
+              { num: 1, outcome: "failed", reason: "Low yield", notes: "Eluted with 15µl water. Recovery <10ng/µl.", date: "23 Jul" }
+            ]
+          },
+          { id: 104, name: "Transformation", status: "pending", tags: ["No colonies"], attempts: [] },
+          { id: 105, name: "Colony Screening", status: "pending", tags: ["False positives"], attempts: [] }
         ]
       }
     ];
 
-    let activeExpId = experiments[0]?.id || null;
-    let logState = { expId: null, attemptNum: 1, outcome: 'failed', selectedReasons: [] };
+    let currentFolderId = folders[0]?.id || null;
+    let currentStepId = null;
 
     function saveData() {
-      localStorage.setItem('attempts_data', JSON.stringify(experiments));
+      localStorage.setItem('attempts_v2_data', JSON.stringify(folders));
       renderDashboard();
     }
 
-    // Navigation Switcher
     function switchView(viewName) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById(`view-${viewName}`).classList.add('active');
     }
 
-    // Dashboard Rendering
+    // Render Home Dashboard
     function renderDashboard() {
-      // Calculate Global Stats
-      const totalExp = experiments.length;
-      let totalFailures = 0;
-      let completedExps = 0;
-      let totalSuccessAttemptsCount = 0;
+      const totalFolders = folders.length;
+      let totalFails = 0;
+      let completedFolders = 0;
+      let totalTriesInCompleted = 0;
 
-      experiments.forEach(e => {
-        const fails = e.attempts.filter(a => a.outcome === 'failed').length;
-        totalFailures += fails;
-        if (e.status === 'completed') {
-          completedExps++;
-          totalSuccessAttemptsCount += e.attempts.length;
+      folders.forEach(f => {
+        let folderFails = 0;
+        let totalFolderTries = 0;
+        let stepsDone = 0;
+
+        f.steps.forEach(s => {
+          const fails = s.attempts.filter(a => a.outcome === 'failed').length;
+          folderFails += fails;
+          totalFolderTries += s.attempts.length;
+          if (s.status === 'completed') stepsDone++;
+        });
+
+        totalFails += folderFails;
+        
+        // Check auto-completion of entire folder
+        if (f.steps.length > 0 && stepsDone === f.steps.length) {
+          f.status = 'completed';
+          completedFolders++;
+          totalTriesInCompleted += totalFolderTries;
+        } else {
+          f.status = 'in_progress';
         }
       });
 
-      const avgAttempts = completedExps > 0 ? (totalSuccessAttemptsCount / completedExps).toFixed(1) : "0.0";
+      const avgTries = completedFolders > 0 ? (totalTriesInCompleted / completedFolders).toFixed(1) : "0.0";
 
-      document.getElementById('stat-total-exp').innerText = totalExp;
-      document.getElementById('stat-failed').innerText = totalFailures;
-      document.getElementById('stat-success').innerText = completedExps;
-      document.getElementById('stat-avg').innerText = avgAttempts;
+      document.getElementById('st-folders').innerText = totalFolders;
+      document.getElementById('st-fails').innerText = totalFails;
+      document.getElementById('st-success').innerText = completedFolders;
+      document.getElementById('st-avg').innerText = avgTries;
 
-      // Render Active/Hero Experiment
-      const activeExp = experiments.find(e => e.id === activeExpId) || experiments[0];
-      if (activeExp) {
-        activeExpId = activeExp.id;
-        document.getElementById('hero-title').innerText = activeExp.name;
-        const attemptsCount = activeExp.attempts.length;
-        document.getElementById('hero-attempts-count').innerText = attemptsCount;
-        
-        // Progress Ring Calculation (Cap visual ring at 10 attempts)
-        const ring = document.getElementById('hero-ring');
-        const offset = Math.max(0, 251.2 - (attemptsCount / 10) * 251.2);
-        ring.style.strokeDashoffset = offset;
-      }
+      const container = document.getElementById('folders-container');
+      container.innerHTML = '';
 
-      // Render Recent Experiments List
-      const listContainer = document.getElementById('experiments-list');
-      listContainer.innerHTML = '';
-
-      experiments.forEach(exp => {
-        const isSuccess = exp.status === 'completed';
-        const attemptsNum = exp.attempts.length;
-
-        const row = document.createElement('div');
-        row.className = 'exp-row';
-        row.onclick = () => openDetailsScreen(exp.id);
-        row.innerHTML = `
-          <div class="exp-info">
-            <div class="exp-icon">${isSuccess ? '🧫' : '🧬'}</div>
-            <div>
-              <div class="exp-title">${exp.name}</div>
-              <div class="exp-status">
-                <span class="status-dot ${isSuccess ? 'success' : ''}"></span>
-                ${isSuccess ? 'Completed' : 'In Progress'}
-              </div>
-            </div>
-          </div>
-          <div class="exp-count">
-            <div class="exp-count-num">${attemptsNum}</div>
-            <div class="exp-count-label">Attempts</div>
-          </div>
-        `;
-        listContainer.appendChild(row);
-      });
-    }
-
-    // New Protocol Creation
-    function createNewExperimentPrompt() {
-      const name = prompt("Enter Experiment / Protocol Name:");
-      if (!name || !name.trim()) return;
-
-      const newExp = {
-        id: Date.now(),
-        name: name.trim(),
-        status: "in_progress",
-        attempts: []
-      };
-
-      experiments.unshift(newExp);
-      activeExpId = newExp.id;
-      saveData();
-    }
-
-    // Log Form Actions
-    function openLogScreen() {
-      const activeExp = experiments.find(e => e.id === activeExpId) || experiments[0];
-      if (!activeExp) {
-        createNewExperimentPrompt();
+      if (folders.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">No protocols logged yet. Tap + New Protocol above.</p>`;
         return;
       }
 
-      logState.expId = activeExp.id;
-      logState.attemptNum = activeExp.attempts.length + 1;
-      logState.outcome = 'failed';
-      logState.selectedReasons = [];
+      folders.forEach(f => {
+        const completedSteps = f.steps.filter(s => s.status === 'completed').length;
+        const percent = f.steps.length > 0 ? Math.round((completedSteps / f.steps.length) * 100) : 0;
+        const totalFailsInFolder = f.steps.reduce((acc, s) => acc + s.attempts.filter(a => a.outcome === 'failed').length, 0);
 
-      document.getElementById('log-exp-name').innerText = activeExp.name;
-      document.getElementById('log-attempt-num').innerText = logState.attemptNum;
-      document.getElementById('log-notes').value = '';
-      
-      setResultOutcome('failed');
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
-      
-      switchView('log');
-    }
-
-    function adjustAttemptCount(delta) {
-      logState.attemptNum = Math.max(1, logState.attemptNum + delta);
-      document.getElementById('log-attempt-num').innerText = logState.attemptNum;
-    }
-
-    function setResultOutcome(outcome) {
-      logState.outcome = outcome;
-      const btnFail = document.getElementById('btn-result-fail');
-      const btnSuccess = document.getElementById('btn-result-success');
-      const reasonSection = document.getElementById('reason-section');
-
-      if (outcome === 'failed') {
-        btnFail.className = 'segment-btn selected-fail';
-        btnSuccess.className = 'segment-btn';
-        reasonSection.style.display = 'block';
-      } else {
-        btnFail.className = 'segment-btn';
-        btnSuccess.className = 'segment-btn selected-success';
-        reasonSection.style.display = 'none';
-      }
-    }
-
-    function toggleChip(chipEl) {
-      chipEl.classList.toggle('selected');
-    }
-
-    function saveAttempt() {
-      const exp = experiments.find(e => e.id === logState.expId);
-      if (!exp) return;
-
-      const notes = document.getElementById('log-notes').value.trim();
-      const selectedChips = Array.from(document.querySelectorAll('.chip.selected')).map(c => c.innerText);
-
-      exp.attempts.push({
-        num: logState.attemptNum,
-        outcome: logState.outcome,
-        reason: selectedChips.join(', '),
-        notes: notes || (logState.outcome === 'success' ? 'Target result achieved!' : 'Unspecified failure'),
-        date: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short' })
-      });
-
-      if (logState.outcome === 'success') {
-        exp.status = 'completed';
-      }
-
-      saveData();
-      switchView('home');
-    }
-
-    // Timeline Screen Actions
-    function openDetailsScreen(expId) {
-      const exp = experiments.find(e => e.id === expId);
-      if (!exp) return;
-      activeExpId = exp.id;
-
-      document.getElementById('details-title').innerText = exp.name;
-      const container = document.getElementById('details-timeline-container');
-      
-      let html = `<div class="timeline">`;
-      exp.attempts.forEach(att => {
-        const isSuccess = att.outcome === 'success';
-        html += `
-          <div class="timeline-item">
-            <div class="timeline-badge">${att.num}</div>
-            <div class="timeline-card">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="font-size:0.9rem;">Attempt ${att.num}</strong>
-                <span style="font-size:0.7rem; font-weight:700; color:${isSuccess ? 'var(--success)' : 'var(--danger)'};">
-                  ${isSuccess ? 'SUCCESS 🎉' : 'FAILED ❌'}
-                </span>
-              </div>
-              ${att.reason ? `<div style="font-size:0.75rem; font-weight:600; color:var(--text-muted); margin-top:2px;">Reason: ${att.reason}</div>` : ''}
-              <div style="font-size:0.85rem; margin-top:6px; color:var(--text-main);">${att.notes}</div>
-              <div style="font-size:0.65rem; color:var(--text-muted); margin-top:4px;">${att.date}</div>
+        const el = document.createElement('div');
+        el.className = 'folder-item';
+        el.onclick = () => openFolderDetail(f.id);
+        el.innerHTML = `
+          <div style="width:100%;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="folder-title">${f.name}</span>
+              <span class="badge ${f.status}">${f.status === 'completed' ? 'Completed' : 'In Progress'}</span>
+            </div>
+            <div class="folder-meta">${completedSteps} / ${f.steps.length} Steps Done · <span style="color:var(--danger);">${totalFailsInFolder} Failures</span></div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: ${percent}%;"></div>
             </div>
           </div>
         `;
+        container.appendChild(el);
       });
-      html += `</div>`;
-
-      container.innerHTML = html;
-      switchView('details');
     }
 
-    function deleteCurrentExperiment() {
-      if (confirm("Delete this experiment log entirely?")) {
-        experiments = experiments.filter(e => e.id !== activeExpId);
+    // Protocol Creation Modal
+    function openNewFolderModal() {
+      document.getElementById('new-folder-name').value = '';
+      switchView('new-folder');
+    }
+
+    function createFolder() {
+      const name = document.getElementById('new-folder-name').value.trim();
+      const templateKey = document.getElementById('new-folder-template').value;
+      if (!name) return;
+
+      const templateSteps = TEMPLATES[templateKey] || TEMPLATES.custom;
+      const newFolder = {
+        id: Date.now(),
+        name: name,
+        status: "in_progress",
+        steps: templateSteps.map((st, idx) => ({
+          id: Date.now() + idx,
+          name: st.name,
+          status: idx === 0 ? "in_progress" : "pending",
+          tags: st.tags,
+          attempts: []
+        }))
+      };
+
+      folders.unshift(newFolder);
+      saveData();
+      openFolderDetail(newFolder.id);
+    }
+
+    // Folder Detail View
+    function openFolderDetail(folderId) {
+      currentFolderId = folderId;
+      const folder = folders.find(f => f.id === folderId);
+      if (!folder) return;
+
+      document.getElementById('folder-detail-name').innerText = folder.name;
+      
+      const completedSteps = folder.steps.filter(s => s.status === 'completed').length;
+      const totalFails = folder.steps.reduce((acc, s) => acc + s.attempts.filter(a => a.outcome === 'failed').length, 0);
+      const percent = folder.steps.length > 0 ? Math.round((completedSteps / folder.steps.length) * 100) : 0;
+
+      document.getElementById('folder-progress-text').innerText = `${completedSteps} / ${folder.steps.length} Steps Completed`;
+      document.getElementById('folder-fails-text').innerText = `${totalFails} Failures Logged`;
+      document.getElementById('folder-progress-fill').style.width = `${percent}%`;
+
+      const container = document.getElementById('steps-container');
+      container.innerHTML = '';
+
+      folder.steps.forEach(step => {
+        const fails = step.attempts.filter(a => a.outcome === 'failed').length;
+        const totalTries = step.attempts.length;
+
+        const card = document.createElement('div');
+        card.className = 'step-card';
+        card.innerHTML = `
+          <div class="step-header">
+            <div>
+              <span class="step-name">${step.name}</span>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
+                ${totalTries} Tries (${fails} Failures)
+              </div>
+            </div>
+            <span class="badge ${step.status}">${step.status.replace('_', ' ')}</span>
+          </div>
+
+          <div style="margin-top:10px;">
+            ${step.attempts.map(a => `
+              <div class="attempt-log-item ${a.outcome}">
+                <strong>Try #${a.num} (${a.outcome.toUpperCase()}):</strong> ${a.reason ? `[${a.reason}] ` : ''}${a.notes}
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="margin-top:10px; display:flex; gap:8px;">
+            <button class="btn-action btn-sm" onclick="openLogForm(${step.id})">+ Log Try</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      switchView('folder');
+    }
+
+    function addCustomStepPrompt() {
+      const stepName = prompt("Enter new sub-step name:");
+      if (!stepName || !stepName.trim()) return;
+
+      const folder = folders.find(f => f.id === currentFolderId);
+      if (folder) {
+        folder.steps.push({
+          id: Date.now(),
+          name: stepName.trim(),
+          status: "in_progress",
+          tags: ["Protocol error", "Reagent issue", "Contamination"],
+          attempts: []
+        });
+        saveData();
+        openFolderDetail(currentFolderId);
+      }
+    }
+
+    function deleteCurrentFolder() {
+      if (confirm("Delete this entire protocol and all step logs?")) {
+        folders = folders.filter(f => f.id !== currentFolderId);
         saveData();
         switchView('home');
       }
     }
 
-    // Initialize App
+    // Log Form Actions
+    function openLogForm(stepId) {
+      currentStepId = stepId;
+      const folder = folders.find(f => f.id === currentFolderId);
+      const step = folder.steps.find(s => s.id === stepId);
+      if (!step) return;
+
+      document.getElementById('log-step-name').innerText = step.name;
+      document.getElementById('log-outcome').value = 'failed';
+      document.getElementById('log-custom-reason').value = '';
+      document.getElementById('log-notes').value = '';
+
+      const chipsContainer = document.getElementById('step-chips');
+      chipsContainer.innerHTML = '';
+      (step.tags || []).forEach(tag => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.innerText = tag;
+        chip.onclick = () => {
+          chip.classList.toggle('selected');
+        };
+        chipsContainer.appendChild(chip);
+      });
+
+      handleOutcomeChange();
+      switchView('log');
+    }
+
+    function handleOutcomeChange() {
+      const outcome = document.getElementById('log-outcome').value;
+      document.getElementById('reasons-wrapper').style.display = outcome === 'failed' ? 'block' : 'none';
+    }
+
+    function saveAttempt() {
+      const folder = folders.find(f => f.id === currentFolderId);
+      const step = folder.steps.find(s => s.id === currentStepId);
+      if (!step) return;
+
+      const outcome = document.getElementById('log-outcome').value;
+      const selectedChips = Array.from(document.querySelectorAll('#step-chips .chip.selected')).map(c => c.innerText);
+      const customReason = document.getElementById('log-custom-reason').value.trim();
+      if (customReason) selectedChips.push(customReason);
+
+      const notes = document.getElementById('log-notes').value.trim();
+
+      step.attempts.push({
+        num: step.attempts.length + 1,
+        outcome: outcome,
+        reason: selectedChips.join(', '),
+        notes: notes || (outcome === 'success' ? 'Step marked completed.' : 'Unspecified failure'),
+        date: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short' })
+      });
+
+      if (outcome === 'success') {
+        step.status = 'completed';
+        // Unlock next step if pending
+        const currentIdx = folder.steps.findIndex(s => s.id === currentStepId);
+        if (currentIdx < folder.steps.length - 1 && folder.steps[currentIdx + 1].status === 'pending') {
+          folder.steps[currentIdx + 1].status = 'in_progress';
+        }
+      } else {
+        step.status = 'in_progress';
+      }
+
+      saveData();
+      openFolderDetail(currentFolderId);
+    }
+
+    // Init App
     renderDashboard();
 
-    // Register Inline Service Worker for Offline PWA Mode
+    // Inline Service Worker for Offline Execution
     if ('serviceWorker' in navigator) {
       const swCode = `
         self.addEventListener('install', e => self.skipWaiting());
