@@ -1,346 +1,901 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Attempts</title>
   
-  <!-- iOS PWA Meta Tags -->
+  <!-- PWA & iOS Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Attempts">
-  <meta name="theme-color" content="#0d1117">
-  
-  <!-- Dynamic Web App Manifest Generation -->
+  <meta name="theme-color" content="#f8fafc">
+
+  <!-- Inter & Caveat/Handwritten Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <script>
+    // Inline PWA Manifest Generation
     const manifest = {
-      "name": "Attempts - Luck Quota Tracker",
+      "name": "Attempts - Science Tracker",
       "short_name": "Attempts",
       "start_url": "./",
       "display": "standalone",
-      "background_color": "#0d1117",
-      "theme_color": "#0d1117",
-      "icons": [
-        {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230d1117'/><text y='.9em' font-size='90'>🎯</text></svg>",
-          "sizes": "512x512",
-          "type": "image/svg+xml"
-        }
-      ]
+      "background_color": "#090d16",
+      "theme_color": "#7c3aed",
+      "icons": [{
+        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c3aed'/><text y='.85em' x='15' font-size='70'>🧪</text></svg>",
+        "sizes": "512x512",
+        "type": "image/svg+xml"
+      }]
     };
-    const stringManifest = JSON.stringify(manifest);
-    const blob = new Blob([stringManifest], {type: 'application/json'});
-    const manifestURL = URL.createObjectURL(blob);
+    const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
     const link = document.createElement('link');
     link.rel = 'manifest';
-    link.href = manifestURL;
+    link.href = URL.createObjectURL(blob);
     document.head.appendChild(link);
   </script>
 
   <style>
     :root {
-      --bg: #f6f8fa;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text: #1f2328;
-      --text-muted: #636c76;
-      --border: #d0d7de;
-      --accent: #2563eb;
-      --danger: #dc2626;
-      --success: #16a34a;
-      --input-bg: #ffffff;
+      --card-secondary: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #7c3aed;
+      --accent-light: #f3e8ff;
+      --accent-gradient: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      --danger: #ef4444;
+      --danger-bg: #fef2f2;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --chip-bg: #f1f5f9;
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --font-hand: 'Caveat', cursive;
+      --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
 
     [data-theme="dark"] {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --text: #f0f6fc;
-      --text-muted: #8b949e;
-      --border: #30363d;
-      --accent: #3b82f6;
-      --danger: #ef4444;
-      --success: #22c55e;
-      --input-bg: #0d1117;
+      --bg: #090d16;
+      --card-bg: #131927;
+      --card-secondary: #1a2234;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #8b5cf6;
+      --accent-light: rgba(139, 92, 246, 0.15);
+      --danger: #f87171;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --success: #34d399;
+      --success-bg: rgba(16, 185, 129, 0.15);
+      --chip-bg: #1e293b;
+      --nav-bg: rgba(19, 25, 39, 0.85);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); -webkit-tap-highlight-color: transparent; }
 
     body {
       background-color: var(--bg);
-      color: var(--text);
-      padding: env(safe-area-inset-top, 20px) 16px env(safe-area-inset-bottom, 20px);
-      max-width: 600px;
+      color: var(--text-main);
+      padding: env(safe-area-inset-top, 20px) 16px 100px 16px;
+      max-width: 480px;
       margin: 0 auto;
       min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 0 20px 0;
+    }
+
+    .greeting-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
       margin-bottom: 20px;
     }
 
-    h1 { font-size: 1.5rem; font-weight: 700; }
-
-    .theme-btn {
-      background: none;
+    .stat-card {
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.85rem;
+      border-radius: 16px;
+      padding: 12px 6px;
+      text-align: center;
+      box-shadow: var(--shadow);
     }
 
+    .stat-icon { font-size: 1.2rem; margin-bottom: 4px; }
+    .stat-value { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+    .stat-label { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+
+    /* Cards */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 20px;
+      padding: 20px;
       margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
     }
 
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      background: var(--input-bg);
+    .hero-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-light) 100%);
       border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 6px;
-      font-size: 0.95rem;
     }
 
-    button.primary-btn {
-      width: 100%;
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-
-    .experiment-item {
-      border-left: 4px solid var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .experiment-item.completed {
-      border-left-color: var(--success);
-    }
-
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .badge {
-      background: var(--border);
-      color: var(--text);
-      padding: 2px 8px;
-      border-radius: 12px;
+    .card-subtitle {
       font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .badge.success {
-      background: var(--success);
-      color: white;
-    }
-
-    .attempts-list {
-      list-style: none;
-      margin: 12px 0;
-      padding-left: 8px;
-      border-left: 1px dashed var(--border);
-    }
-
-    .attempt-entry {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
 
-    .actions {
+    .hero-flex {
       display: flex;
-      gap: 8px;
-      margin-top: 12px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 16px 0;
     }
 
-    .btn-sm {
-      padding: 6px 12px;
-      font-size: 0.8rem;
-      border-radius: 4px;
+    /* Radial Progress Ring */
+    .progress-ring-container {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-circle-bg {
+      stroke: var(--border);
+    }
+
+    .progress-ring-circle {
+      stroke: var(--accent);
+      stroke-dasharray: 251.2;
+      stroke-dashoffset: 80;
+      transition: stroke-dashoffset 0.5s ease;
+      stroke-linecap: round;
+    }
+
+    .ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .ring-num { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+    .ring-sub { font-size: 0.65rem; color: var(--text-muted); }
+
+    .hero-message {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      background: var(--accent-gradient);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    }
+
+    /* Section Titles */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title { font-size: 1rem; font-weight: 700; }
+
+    /* Experiment List */
+    .exp-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .exp-row {
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    .exp-info { display: flex; align-items: center; gap: 12px; }
+    .exp-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--chip-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .exp-title { font-size: 0.95rem; font-weight: 700; }
+    .exp-status { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    .status-dot.success { background: var(--success); }
+
+    .exp-count { text-align: right; }
+    .exp-count-num { font-size: 1rem; font-weight: 800; }
+    .exp-count-label { font-size: 0.65rem; color: var(--text-muted); }
+
+    /* Sticky Quote Note */
+    .quote-card {
+      background: #fef08a;
+      color: #713f12;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    [data-theme="dark"] .quote-card { background: #422006; color: #fef08a; }
+
+    .quote-text { font-family: var(--font-hand); font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
+
+    /* Views Framework */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* Form Screen Styles */
+    .counter-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin: 16px 0;
+    }
+
+    .btn-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-size: 1.2rem;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    .btn-danger { color: var(--danger); border-color: var(--danger); }
-    .btn-success { color: var(--success); border-color: var(--success); }
+    .count-display { font-size: 2.2rem; font-weight: 800; }
+
+    .segmented-control {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .segment-btn {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .segment-btn.selected-fail { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
+    .segment-btn.selected-success { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+
+    .chips-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .chip {
+      background: var(--chip-bg);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .chip.selected { background: var(--accent); color: white; border-color: var(--accent); }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card-secondary);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      outline: none;
+      margin-top: 6px;
+    }
+
+    /* Timeline View Styles */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+      margin: 16px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .timeline-badge {
+      position: absolute;
+      left: -28px;
+      top: 12px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    /* Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0 env(safe-area-inset-bottom, 12px) 0;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .nav-item.active { color: var(--accent); }
+
+    .nav-fab {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+      margin-top: -20px;
+      cursor: pointer;
+      border: none;
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Attempts 🎯</h1>
-    <button class="theme-btn" onclick="toggleTheme()">🌓 Theme</button>
-  </header>
+  <!-- VIEW 1: HOME DASHBOARD -->
+  <div id="view-home" class="view active">
+    <header>
+      <div>
+        <h1 style="font-size: 1.3rem;">Good morning, Researcher! ☀️</h1>
+        <p class="greeting-subtitle">Every failed attempt is data.<br>Keep experimenting, keep growing! 🌱</p>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </header>
 
-  <!-- New Experiment Form -->
-  <div class="card">
-    <div class="form-group">
-      <label for="expName">Start New Protocol / Experiment</label>
-      <input type="text" id="expName" placeholder="e.g., cccDNA extraction optimization">
+    <!-- Top Key Metrics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🧪</div>
+        <div class="stat-value" id="stat-total-exp">0</div>
+        <div class="stat-label">Total Exp</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">❌</div>
+        <div class="stat-value" id="stat-failed">0</div>
+        <div class="stat-label">Failures</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-value" id="stat-success">0</div>
+        <div class="stat-label">Successes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value" id="stat-avg">0</div>
+        <div class="stat-label">Avg / Success</div>
+      </div>
     </div>
-    <button class="primary-btn" onclick="addExperiment()">Initialize Experiment</button>
+
+    <!-- Active Target Experiment Hero Card -->
+    <div class="card hero-card" id="hero-experiment-card">
+      <div class="card-subtitle">Current Focus</div>
+      <h2 id="hero-title" style="font-size: 1.2rem;">No Active Protocol</h2>
+      
+      <div class="hero-flex">
+        <div class="progress-ring-container">
+          <svg class="progress-ring" width="100" height="100">
+            <circle class="progress-ring-circle-bg" stroke-width="8" fill="transparent" r="40" cx="50" cy="50"/>
+            <circle id="hero-ring" class="progress-ring-circle" stroke-width="8" fill="transparent" r="40" cx="50" cy="50"/>
+          </svg>
+          <div class="ring-text">
+            <div class="ring-num" id="hero-attempts-count">0</div>
+            <div class="ring-sub">Attempts</div>
+          </div>
+        </div>
+        <div class="hero-message">
+          <strong>You're doing great! 💜</strong><br>
+          <span id="hero-hint">Start an experiment or log a trial to track your luck quota.</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="openLogScreen()">
+        <span>➕</span> Log New Attempt
+      </button>
+    </div>
+
+    <!-- Recent Protocols Section -->
+    <div class="section-header">
+      <span class="section-title">🧪 Experiments</span>
+      <button onclick="createNewExperimentPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.85rem; cursor:pointer;">+ New</button>
+    </div>
+
+    <div class="exp-list" id="experiments-list"></div>
+
+    <!-- Sticky Affirmation Note -->
+    <div class="quote-card">
+      <div>
+        <div class="quote-text">Science is 1% inspiration and<br>99% persistence. ✨</div>
+      </div>
+      <div style="font-size: 1.8rem;">📌</div>
+    </div>
   </div>
 
-  <!-- Experiments Dashboard -->
-  <div id="experimentsList"></div>
+  <!-- VIEW 2: LOG ATTEMPT FORM -->
+  <div id="view-log" class="view">
+    <header>
+      <button onclick="switchView('home')" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-main)">←</button>
+      <h2 style="font-size: 1.1rem;">Log New Attempt</h2>
+      <div style="width:24px;"></div>
+    </header>
+
+    <div class="card">
+      <div class="card-subtitle">Active Experiment</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+        <strong id="log-exp-name" style="font-size: 1.1rem;">Select Experiment</strong>
+        <button onclick="switchView('home')" style="background:var(--chip-bg); border:none; padding:4px 10px; border-radius:8px; font-size:0.75rem; color:var(--text-main);">Change</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-subtitle" style="text-align: center;">Attempt Number</div>
+      <div class="counter-control">
+        <button class="btn-circle" onclick="adjustAttemptCount(-1)">-</button>
+        <span class="count-display" id="log-attempt-num">1</span>
+        <button class="btn-circle" onclick="adjustAttemptCount(1)">+</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-subtitle">Result Outcome</div>
+      <div class="segmented-control">
+        <button id="btn-result-fail" class="segment-btn selected-fail" onclick="setResultOutcome('failed')">❌ Failed</button>
+        <button id="btn-result-success" class="segment-btn" onclick="setResultOutcome('success')">✅ Success</button>
+      </div>
+
+      <div id="reason-section">
+        <div class="card-subtitle" style="margin-top: 14px;">Reason for Failure (Optional)</div>
+        <div class="chips-grid" id="chips-container">
+          <div class="chip" onclick="toggleChip(this)">Cells unhealthy</div>
+          <div class="chip" onclick="toggleChip(this)">Low yield</div>
+          <div class="chip" onclick="toggleChip(this)">Wrong ratio</div>
+          <div class="chip" onclick="toggleChip(this)">Reagent issue</div>
+          <div class="chip" onclick="toggleChip(this)">Contamination</div>
+          <div class="chip" onclick="toggleChip(this)">Experimental error</div>
+        </div>
+      </div>
+
+      <div class="card-subtitle" style="margin-top: 14px;">Notes / Observations</div>
+      <textarea id="log-notes" rows="3" placeholder="Write specific buffer tweaks, parameters, or observations..."></textarea>
+
+      <button class="btn-primary" style="margin-top: 16px;" onclick="saveAttempt()">
+        <span>💾</span> Save Attempt
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW 3: TIMELINE / DETAILS -->
+  <div id="view-details" class="view">
+    <header>
+      <button onclick="switchView('home')" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-main)">←</button>
+      <h2 id="details-title" style="font-size: 1.1rem;">Protocol Details</h2>
+      <button onclick="deleteCurrentExperiment()" style="background:none; border:none; color:var(--danger); font-size:0.85rem; font-weight:700;">Delete</button>
+    </header>
+
+    <div id="details-timeline-container"></div>
+  </div>
+
+  <!-- Bottom Global Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchView('home')">
+      <span style="font-size: 1.2rem;">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="nav-fab" onclick="openLogScreen()">+</button>
+    <button class="nav-item" onclick="switchView('home')">
+      <span style="font-size: 1.2rem;">📊</span>
+      <span>Stats</span>
+    </button>
+  </nav>
 
   <script>
-    // System Theme Auto-Detection & Persistent Toggle
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let currentTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+    // System Theme Auto-Detect & Persistence
+    let currentTheme = localStorage.getItem('attempts_theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', currentTheme);
 
     function toggleTheme() {
       currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', currentTheme);
-      localStorage.setItem('theme', currentTheme);
+      localStorage.setItem('attempts_theme', currentTheme);
     }
 
-    // App State Management via LocalStorage
-    let experiments = JSON.parse(localStorage.getItem('attempts_data')) || [];
+    // App State Management
+    let experiments = JSON.parse(localStorage.getItem('attempts_data')) || [
+      {
+        id: 101,
+        name: "KFD NS5 Transfection",
+        status: "in_progress",
+        attempts: [
+          { num: 1, outcome: "failed", reason: "Cells unhealthy", notes: "Cells were not healthy prior to transfection.", date: "22 Jul" },
+          { num: 2, outcome: "failed", reason: "Low yield", notes: "Low confluency observed.", date: "22 Jul" },
+          { num: 3, outcome: "failed", reason: "Wrong ratio", notes: "DNA:Lipofectamine ratio was off.", date: "23 Jul" },
+          { num: 4, outcome: "failed", reason: "Reagent issue", notes: "Lipofectamine expired?", date: "24 Jul" },
+          { num: 5, outcome: "failed", reason: "Low yield", notes: "Low GFP expression.", date: "25 Jul" }
+        ]
+      },
+      {
+        id: 102,
+        name: "Colony PCR",
+        status: "in_progress",
+        attempts: [
+          { num: 1, outcome: "failed", reason: "Experimental error", notes: "Annealing temp too high.", date: "20 Jul" },
+          { num: 2, outcome: "failed", reason: "Contamination", notes: "Primer dimer bands only.", date: "21 Jul" },
+          { num: 3, outcome: "failed", reason: "Reagent issue", notes: "Taq polymerase inactive.", date: "22 Jul" }
+        ]
+      },
+      {
+        id: 103,
+        name: "Cell Revival",
+        status: "completed",
+        attempts: [
+          { num: 1, outcome: "failed", reason: "Cells unhealthy", notes: "Slow thawing rate.", date: "15 Jul" },
+          { num: 2, outcome: "success", reason: "", notes: "Optimal DMSO washout executed.", date: "16 Jul" }
+        ]
+      }
+    ];
+
+    let activeExpId = experiments[0]?.id || null;
+    let logState = { expId: null, attemptNum: 1, outcome: 'failed', selectedReasons: [] };
 
     function saveData() {
       localStorage.setItem('attempts_data', JSON.stringify(experiments));
-      render();
+      renderDashboard();
     }
 
-    function addExperiment() {
-      const nameInput = document.getElementById('expName');
-      if (!nameInput.value.trim()) return;
-
-      const newExp = {
-        id: Date.now(),
-        name: nameInput.value.trim(),
-        status: 'active', // 'active' or 'success'
-        attempts: [],
-        createdAt: new Date().toLocaleDateString()
-      };
-
-      experiments.unshift(newExp);
-      nameInput.value = '';
-      saveData();
+    // Navigation Switcher
+    function switchView(viewName) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById(`view-${viewName}`).classList.add('active');
     }
 
-    function logFailure(expId) {
-      const reason = prompt("What failed or changed in this try? (e.g., Yield too low, buffer pH off)");
-      if (reason === null) return; // User cancelled
+    // Dashboard Rendering
+    function renderDashboard() {
+      // Calculate Global Stats
+      const totalExp = experiments.length;
+      let totalFailures = 0;
+      let completedExps = 0;
+      let totalSuccessAttemptsCount = 0;
 
-      const exp = experiments.find(e => e.id === expId);
-      if (exp) {
-        exp.attempts.push({
-          tryNumber: exp.attempts.length + 1,
-          note: reason.trim() || 'Unspecified failure',
-          timestamp: new Date().toLocaleDateString()
-        });
-        saveData();
+      experiments.forEach(e => {
+        const fails = e.attempts.filter(a => a.outcome === 'failed').length;
+        totalFailures += fails;
+        if (e.status === 'completed') {
+          completedExps++;
+          totalSuccessAttemptsCount += e.attempts.length;
+        }
+      });
+
+      const avgAttempts = completedExps > 0 ? (totalSuccessAttemptsCount / completedExps).toFixed(1) : "0.0";
+
+      document.getElementById('stat-total-exp').innerText = totalExp;
+      document.getElementById('stat-failed').innerText = totalFailures;
+      document.getElementById('stat-success').innerText = completedExps;
+      document.getElementById('stat-avg').innerText = avgAttempts;
+
+      // Render Active/Hero Experiment
+      const activeExp = experiments.find(e => e.id === activeExpId) || experiments[0];
+      if (activeExp) {
+        activeExpId = activeExp.id;
+        document.getElementById('hero-title').innerText = activeExp.name;
+        const attemptsCount = activeExp.attempts.length;
+        document.getElementById('hero-attempts-count').innerText = attemptsCount;
+        
+        // Progress Ring Calculation (Cap visual ring at 10 attempts)
+        const ring = document.getElementById('hero-ring');
+        const offset = Math.max(0, 251.2 - (attemptsCount / 10) * 251.2);
+        ring.style.strokeDashoffset = offset;
       }
-    }
 
-    function markSuccess(expId) {
-      const exp = experiments.find(e => e.id === expId);
-      if (exp) {
-        exp.status = 'success';
-        saveData();
-      }
-    }
-
-    function deleteExperiment(expId) {
-      if (confirm("Delete this experiment log?")) {
-        experiments = experiments.filter(e => e.id !== expId);
-        saveData();
-      }
-    }
-
-    function render() {
-      const container = document.getElementById('experimentsList');
-      container.innerHTML = '';
-
-      if (experiments.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No attempts logged yet. Start a new experiment above!</p>';
-        return;
-      }
+      // Render Recent Experiments List
+      const listContainer = document.getElementById('experiments-list');
+      listContainer.innerHTML = '';
 
       experiments.forEach(exp => {
-        const isSuccess = exp.status === 'success';
-        const totalTries = exp.attempts.length + (isSuccess ? 1 : 0);
+        const isSuccess = exp.status === 'completed';
+        const attemptsNum = exp.attempts.length;
 
-        const card = document.createElement('div');
-        card.className = `card experiment-item ${isSuccess ? 'completed' : ''}`;
-        
-        card.innerHTML = `
-          <div class="exp-header">
-            <strong>${exp.name}</strong>
-            <span class="badge ${isSuccess ? 'success' : ''}">
-              ${isSuccess ? `Succeeded on Try #${totalTries}` : `${exp.attempts.length} Failures Logged`}
-            </span>
+        const row = document.createElement('div');
+        row.className = 'exp-row';
+        row.onclick = () => openDetailsScreen(exp.id);
+        row.innerHTML = `
+          <div class="exp-info">
+            <div class="exp-icon">${isSuccess ? '🧫' : '🧬'}</div>
+            <div>
+              <div class="exp-title">${exp.name}</div>
+              <div class="exp-status">
+                <span class="status-dot ${isSuccess ? 'success' : ''}"></span>
+                ${isSuccess ? 'Completed' : 'In Progress'}
+              </div>
+            </div>
           </div>
-
-          <ul class="attempts-list">
-            ${exp.attempts.map(att => `
-              <li class="attempt-entry">
-                <strong>Try #${att.tryNumber}:</strong> ${att.note} <em>(${att.timestamp})</em>
-              </li>
-            `).join('')}
-            ${isSuccess ? `<li class="attempt-entry" style="color: var(--success);"><strong>Try #${totalTries}:</strong> Experiment successful! Target result achieved.</li>` : ''}
-          </ul>
-
-          <div class="actions">
-            ${!isSuccess ? `
-              <button class="btn-sm btn-danger" onclick="logFailure(${exp.id})">+ Log Failed Try</button>
-              <button class="btn-sm btn-success" onclick="markSuccess(${exp.id})">Mark Success 🎉</button>
-            ` : ''}
-            <button class="btn-sm" style="margin-left: auto;" onclick="deleteExperiment(${exp.id})">Delete</button>
+          <div class="exp-count">
+            <div class="exp-count-num">${attemptsNum}</div>
+            <div class="exp-count-label">Attempts</div>
           </div>
         `;
-
-        container.appendChild(card);
+        listContainer.appendChild(row);
       });
     }
 
-    // Initial Render
-    render();
+    // New Protocol Creation
+    function createNewExperimentPrompt() {
+      const name = prompt("Enter Experiment / Protocol Name:");
+      if (!name || !name.trim()) return;
 
-    // Register Inline Service Worker for Offline Functionality
+      const newExp = {
+        id: Date.now(),
+        name: name.trim(),
+        status: "in_progress",
+        attempts: []
+      };
+
+      experiments.unshift(newExp);
+      activeExpId = newExp.id;
+      saveData();
+    }
+
+    // Log Form Actions
+    function openLogScreen() {
+      const activeExp = experiments.find(e => e.id === activeExpId) || experiments[0];
+      if (!activeExp) {
+        createNewExperimentPrompt();
+        return;
+      }
+
+      logState.expId = activeExp.id;
+      logState.attemptNum = activeExp.attempts.length + 1;
+      logState.outcome = 'failed';
+      logState.selectedReasons = [];
+
+      document.getElementById('log-exp-name').innerText = activeExp.name;
+      document.getElementById('log-attempt-num').innerText = logState.attemptNum;
+      document.getElementById('log-notes').value = '';
+      
+      setResultOutcome('failed');
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      
+      switchView('log');
+    }
+
+    function adjustAttemptCount(delta) {
+      logState.attemptNum = Math.max(1, logState.attemptNum + delta);
+      document.getElementById('log-attempt-num').innerText = logState.attemptNum;
+    }
+
+    function setResultOutcome(outcome) {
+      logState.outcome = outcome;
+      const btnFail = document.getElementById('btn-result-fail');
+      const btnSuccess = document.getElementById('btn-result-success');
+      const reasonSection = document.getElementById('reason-section');
+
+      if (outcome === 'failed') {
+        btnFail.className = 'segment-btn selected-fail';
+        btnSuccess.className = 'segment-btn';
+        reasonSection.style.display = 'block';
+      } else {
+        btnFail.className = 'segment-btn';
+        btnSuccess.className = 'segment-btn selected-success';
+        reasonSection.style.display = 'none';
+      }
+    }
+
+    function toggleChip(chipEl) {
+      chipEl.classList.toggle('selected');
+    }
+
+    function saveAttempt() {
+      const exp = experiments.find(e => e.id === logState.expId);
+      if (!exp) return;
+
+      const notes = document.getElementById('log-notes').value.trim();
+      const selectedChips = Array.from(document.querySelectorAll('.chip.selected')).map(c => c.innerText);
+
+      exp.attempts.push({
+        num: logState.attemptNum,
+        outcome: logState.outcome,
+        reason: selectedChips.join(', '),
+        notes: notes || (logState.outcome === 'success' ? 'Target result achieved!' : 'Unspecified failure'),
+        date: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short' })
+      });
+
+      if (logState.outcome === 'success') {
+        exp.status = 'completed';
+      }
+
+      saveData();
+      switchView('home');
+    }
+
+    // Timeline Screen Actions
+    function openDetailsScreen(expId) {
+      const exp = experiments.find(e => e.id === expId);
+      if (!exp) return;
+      activeExpId = exp.id;
+
+      document.getElementById('details-title').innerText = exp.name;
+      const container = document.getElementById('details-timeline-container');
+      
+      let html = `<div class="timeline">`;
+      exp.attempts.forEach(att => {
+        const isSuccess = att.outcome === 'success';
+        html += `
+          <div class="timeline-item">
+            <div class="timeline-badge">${att.num}</div>
+            <div class="timeline-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font-size:0.9rem;">Attempt ${att.num}</strong>
+                <span style="font-size:0.7rem; font-weight:700; color:${isSuccess ? 'var(--success)' : 'var(--danger)'};">
+                  ${isSuccess ? 'SUCCESS 🎉' : 'FAILED ❌'}
+                </span>
+              </div>
+              ${att.reason ? `<div style="font-size:0.75rem; font-weight:600; color:var(--text-muted); margin-top:2px;">Reason: ${att.reason}</div>` : ''}
+              <div style="font-size:0.85rem; margin-top:6px; color:var(--text-main);">${att.notes}</div>
+              <div style="font-size:0.65rem; color:var(--text-muted); margin-top:4px;">${att.date}</div>
+            </div>
+          </div>
+        `;
+      });
+      html += `</div>`;
+
+      container.innerHTML = html;
+      switchView('details');
+    }
+
+    function deleteCurrentExperiment() {
+      if (confirm("Delete this experiment log entirely?")) {
+        experiments = experiments.filter(e => e.id !== activeExpId);
+        saveData();
+        switchView('home');
+      }
+    }
+
+    // Initialize App
+    renderDashboard();
+
+    // Register Inline Service Worker for Offline PWA Mode
     if ('serviceWorker' in navigator) {
       const swCode = `
         self.addEventListener('install', e => self.skipWaiting());
         self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
       `;
-      const blob = new Blob([swCode], { type: 'application/javascript' });
-      navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+      navigator.serviceWorker.register(URL.createObjectURL(new Blob([swCode], { type: 'application/javascript' }))).catch(() => {});
     }
   </script>
 </body>
