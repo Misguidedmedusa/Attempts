@@ -92,9 +92,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 0 20px 0;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
+      padding: 12px 0 16px 0;
     }
 
     h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
@@ -118,7 +116,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .stat-card {
@@ -134,14 +132,20 @@
     .stat-val { font-size: 1.15rem; font-weight: 800; }
     .stat-lbl { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
 
-    /* Cards & Containers */
+    /* Hero Card / Current Focus */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 16px;
       margin-bottom: 16px;
       box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-light) 100%);
+      border: 1px solid var(--border);
     }
 
     .card-label {
@@ -150,8 +154,45 @@
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
+
+    .hero-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 12px 0;
+    }
+
+    /* Radial Progress Ring */
+    .progress-ring-container {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      flex-shrink: 0;
+    }
+
+    .progress-ring { transform: rotate(-90deg); }
+    .progress-ring-circle-bg { stroke: var(--border); }
+    .progress-ring-circle {
+      stroke: var(--accent);
+      stroke-dasharray: 226.2;
+      stroke-dashoffset: 60;
+      transition: stroke-dashoffset 0.4s ease;
+      stroke-linecap: round;
+    }
+
+    .ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .ring-num { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+    .ring-sub { font-size: 0.62rem; color: var(--text-muted); font-weight: 600; }
 
     /* Folder List View */
     .folder-item {
@@ -198,7 +239,7 @@
       transition: width 0.3s ease;
     }
 
-    /* Sub-Steps Accordion / List */
+    /* Sub-Steps */
     .step-card {
       background: var(--card-sub);
       border: 1px solid var(--border);
@@ -207,18 +248,8 @@
       margin-bottom: 10px;
     }
 
-    .step-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .step-title-flex {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .step-header { display: flex; justify-content: space-between; align-items: center; }
+    .step-title-flex { display: flex; align-items: center; gap: 8px; }
     .step-icon { font-size: 1.1rem; }
     .step-name { font-size: 0.9rem; font-weight: 700; }
 
@@ -252,7 +283,7 @@
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
     .btn-danger-outline { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
 
-    /* Input & Chip Styles */
+    /* Inputs & Chips */
     input, select, textarea {
       width: 100%;
       padding: 10px 12px;
@@ -278,7 +309,6 @@
     }
     .chip.selected { background: var(--accent); color: white; border-color: var(--accent); }
 
-    /* Log Timeline */
     .attempt-log-item {
       border-left: 2px solid var(--border);
       padding-left: 10px;
@@ -288,11 +318,9 @@
     .attempt-log-item.failed { border-left-color: var(--danger); }
     .attempt-log-item.success { border-left-color: var(--success); }
 
-    /* Views Navigation */
     .view { display: none; }
     .view.active { display: block; }
 
-    /* Fixed Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -337,6 +365,7 @@
       <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     </header>
 
+    <!-- Top Key Metrics -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon">🧪</div>
@@ -360,8 +389,39 @@
       </div>
     </div>
 
+    <!-- CURRENT FOCUS HERO CARD WITH RING -->
+    <div class="card hero-card" id="hero-card">
+      <div class="card-label">🎯 Current Focus</div>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="hero-title" style="font-size: 1.1rem; font-weight:800;">No Active Protocol</h2>
+        <span id="hero-step-badge" class="badge in_progress">Active Step</span>
+      </div>
+      
+      <div class="hero-flex">
+        <div class="progress-ring-container">
+          <svg class="progress-ring" width="90" height="90">
+            <circle class="progress-ring-circle-bg" stroke-width="7" fill="transparent" r="36" cx="45" cy="45"/>
+            <circle id="hero-ring" class="progress-ring-circle" stroke-width="7" fill="transparent" r="36" cx="45" cy="45"/>
+          </svg>
+          <div class="ring-text">
+            <div class="ring-num" id="hero-count">0</div>
+            <div class="ring-sub">Tries</div>
+          </div>
+        </div>
+        <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.35;">
+          <strong id="hero-active-step-name" style="color:var(--text-main);">Select a step</strong><br>
+          <span id="hero-subtext">Log failed tries until the protocol works.</span>
+        </div>
+      </div>
+
+      <button class="btn-action" style="width:100%; justify-content:center;" onclick="quickLogHeroStep()">
+        ✍️ Quick Log Attempt
+      </button>
+    </div>
+
+    <!-- PROTOCOLS LIST -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-      <span style="font-size: 0.9rem; font-weight: 800;">🧪 Active Protocols</span>
+      <span style="font-size: 0.9rem; font-weight: 800;">🧪 All Protocols</span>
       <button class="btn-action btn-sm" onclick="openNewFolderModal()">➕ New Protocol</button>
     </div>
 
@@ -388,7 +448,7 @@
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-      <span style="font-size: 0.85rem; font-weight: 800; color:var(--text-muted); text-transform:uppercase;">🔬 Protocol Sub-Steps</span>
+      <span style="font-size: 0.85rem; font-weight: 800; color:var(--text-muted); text-transform:uppercase;">🔬 Sub-Steps</span>
       <button onclick="addCustomStepPrompt()" style="background:none; border:none; color:var(--accent); font-weight:700; font-size:0.8rem; cursor:pointer;">➕ Add Step</button>
     </div>
 
@@ -470,7 +530,6 @@
   </nav>
 
   <script>
-    // System Theme Auto-Detect & Persistence
     let currentTheme = localStorage.getItem('attempts_theme') || 
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', currentTheme);
@@ -481,7 +540,6 @@
       localStorage.setItem('attempts_theme', currentTheme);
     }
 
-    // Default Preset Failure Tags and Icons for Lab Workflows
     const TEMPLATES = {
       cloning: {
         icon: "🧬",
@@ -528,8 +586,7 @@
       }
     };
 
-    // App State
-    let folders = JSON.parse(localStorage.getItem('attempts_v3_data')) || [
+    let folders = JSON.parse(localStorage.getItem('attempts_v4_data')) || [
       {
         id: 1,
         name: "pET-28a Cloning",
@@ -553,9 +610,7 @@
             icon: "✂️",
             status: "completed",
             tags: ["Incomplete cut", "Star activity"],
-            attempts: [
-              { num: 1, outcome: "success", reason: "", notes: "Double digest overnight at 37°C.", date: "22 Jul" }
-            ]
+            attempts: [{ num: 1, outcome: "success", reason: "", notes: "Double digest overnight at 37°C.", date: "22 Jul" }]
           },
           {
             id: 103,
@@ -563,9 +618,7 @@
             icon: "🧪",
             status: "in_progress",
             tags: ["Low yield", "Salt contamination"],
-            attempts: [
-              { num: 1, outcome: "failed", reason: "Low yield", notes: "Eluted with 15µl water. Recovery <10ng/µl.", date: "23 Jul" }
-            ]
+            attempts: [{ num: 1, outcome: "failed", reason: "Low yield", notes: "Eluted with 15µl water. Recovery <10ng/µl.", date: "23 Jul" }]
           },
           { id: 104, name: "Transformation", icon: "🧫", status: "pending", tags: ["No colonies"], attempts: [] },
           { id: 105, name: "Colony Screening", icon: "🔍", status: "pending", tags: ["False positives"], attempts: [] }
@@ -577,7 +630,7 @@
     let currentStepId = null;
 
     function saveData() {
-      localStorage.setItem('attempts_v3_data', JSON.stringify(folders));
+      localStorage.setItem('attempts_v4_data', JSON.stringify(folders));
       renderDashboard();
     }
 
@@ -586,7 +639,6 @@
       document.getElementById(`view-${viewName}`).classList.add('active');
     }
 
-    // Render Home Dashboard
     function renderDashboard() {
       const totalFolders = folders.length;
       let totalFails = 0;
@@ -606,7 +658,6 @@
         });
 
         totalFails += folderFails;
-        
         if (f.steps.length > 0 && stepsDone === f.steps.length) {
           f.status = 'completed';
           completedFolders++;
@@ -623,11 +674,30 @@
       document.getElementById('st-success').innerText = completedFolders;
       document.getElementById('st-avg').innerText = avgTries;
 
+      // Hero Card Calculation (Active Protocol Focus)
+      const activeFolder = folders.find(f => f.status === 'in_progress') || folders[0];
+      if (activeFolder) {
+        currentFolderId = activeFolder.id;
+        document.getElementById('hero-title').innerText = `${activeFolder.icon || '🧪'} ${activeFolder.name}`;
+        
+        const activeStep = activeFolder.steps.find(s => s.status === 'in_progress') || activeFolder.steps[0];
+        if (activeStep) {
+          currentStepId = activeStep.id;
+          document.getElementById('hero-active-step-name').innerText = `${activeStep.icon || '🧪'} Step: ${activeStep.name}`;
+          const tries = activeStep.attempts.length;
+          document.getElementById('hero-count').innerText = tries;
+          
+          const ring = document.getElementById('hero-ring');
+          const offset = Math.max(0, 226.2 - (tries / 10) * 226.2);
+          ring.style.strokeDashoffset = offset;
+        }
+      }
+
       const container = document.getElementById('folders-container');
       container.innerHTML = '';
 
       if (folders.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">No protocols logged yet. Tap ➕ New Protocol above.</p>`;
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">No protocols logged yet.</p>`;
         return;
       }
 
@@ -656,7 +726,14 @@
       });
     }
 
-    // Protocol Creation Modal
+    function quickLogHeroStep() {
+      if (currentFolderId && currentStepId) {
+        openLogForm(currentStepId);
+      } else {
+        openNewFolderModal();
+      }
+    }
+
     function openNewFolderModal() {
       document.getElementById('new-folder-name').value = '';
       switchView('new-folder');
@@ -688,7 +765,6 @@
       openFolderDetail(newFolder.id);
     }
 
-    // Folder Detail View
     function openFolderDetail(folderId) {
       currentFolderId = folderId;
       const folder = folders.find(f => f.id === folderId);
@@ -772,7 +848,6 @@
       }
     }
 
-    // Log Form Actions
     function openLogForm(stepId) {
       currentStepId = stepId;
       const folder = folders.find(f => f.id === currentFolderId);
@@ -790,9 +865,7 @@
         const chip = document.createElement('div');
         chip.className = 'chip';
         chip.innerText = tag;
-        chip.onclick = () => {
-          chip.classList.toggle('selected');
-        };
+        chip.onclick = () => chip.classList.toggle('selected');
         chipsContainer.appendChild(chip);
       });
 
@@ -839,10 +912,8 @@
       openFolderDetail(currentFolderId);
     }
 
-    // Init App
     renderDashboard();
 
-    // Inline Service Worker for Offline Execution
     if ('serviceWorker' in navigator) {
       const swCode = `
         self.addEventListener('install', e => self.skipWaiting());
